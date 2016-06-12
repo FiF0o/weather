@@ -1,0 +1,28 @@
+{
+  "name": "ReactPOC",
+  "description": "react, gulp, babel, es6",
+  "main": "bundle.js",
+  "authors": [
+    "jon"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "babel",
+    "es6",
+    "react",
+    "gulp"
+  ],
+  "homepage": "https://github.com/FiF0o/ReactPOC",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/vendors",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
