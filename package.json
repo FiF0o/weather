@@ -19,7 +19,7 @@
     "es2015"
   ],
   "bugs": {
-    "url": "https://github.com/codeschool/babel-with-gulp/issues"
+    "url": "https://github.com/FiF0o/ReactPOC/issues"
   },
   "homepage": "https://github.com/FiF0o/ReactPOC.git#readme",
   "devDependencies": {
