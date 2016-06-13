@@ -26,22 +26,21 @@ export default class CommentBox extends React.Component {
     render() {
         const comments = this._getComments();
         return(
-            <div className="row comments-container">
-            <div className="cell">
-            <h2>Join The Discussion</h2>
-        <div className="comment-box">
-            <CommentForm addComment={this._addComment.bind(this)} />
-    <CommentAvatarList avatars={this._getAvatars()} />
+          <div className="row comments-container">
+              <div className="cell">
+                  <h2>Join The Discussion</h2>
+                  <div className="comment-box">
+                      <CommentForm addComment={this._addComment.bind(this)} />
+                      <CommentAvatarList avatars={this._getAvatars()} />
 
-            {this._getPopularMessage(comments.length)}
-            <h3 className="comment-count">{this._getCommentsTitle(comments.length)}</h3>
-        <div className="comment-list">
-            {comments}
-            </div>
-            </div>
-            </div>
-            </div>
-
+                      {this._getPopularMessage(comments.length)}
+                      <h3 className="comment-count">{this._getCommentsTitle(comments.length)}</h3>
+                      <div className="comment-list">
+                          {comments}
+                      </div>
+                  </div>
+              </div>
+          </div>
         );
     }
 
@@ -99,7 +98,7 @@ export default class CommentBox extends React.Component {
         JQuery.ajax({
             method: 'GET',
         //TODO Change final js file bundle.js to be dist at root level ./public
-            url: '/api/comment/comments.json',
+            url: 'api/comment/comments.json',
             success: (comments) => {
                 this.setState({ comments })
             }
@@ -110,7 +109,7 @@ export default class CommentBox extends React.Component {
         const comments = this.state.comments.filter(
             comment => comment.id !== commentID
         );
-
+                    // NTM
         this.setState({ comments });
     }
 }
