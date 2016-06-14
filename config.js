@@ -30,7 +30,6 @@ const config = {
      * Important: only will be compiled *.jade files in this exact dir and not any sub dir
      * you could use a subdir to put partials on it and include in jade.
      */
-    //views: 'views/',
     /**
      * As this is a Sass based project, this is the dir for the sass files. Every file
      * under this dir will be watched for changes, but only the main.sass file
@@ -75,7 +74,6 @@ const config = {
      * managed by bower and if the directory will be changed, you should change on
      * .bowerrc file in the root directory as well.
      */
-    //TODO change relative paths in the index.jade to point to the vendor folder and no longer bower_component
     vendors: 'vendors'
 };
 export default config

@@ -25,12 +25,12 @@ import uncss from 'gulp-uncss';
 import config from './config';
 
 const devBuild = (( config.environment || process.env.NODE_ENV || 'development').trim().toLowerCase() !== 'production');
-const src = config.source[config.source.length - 1] == '/' ? config.source : `${config.source}/`;
+const src = config.source[config.source.length - 1] === '/' ? config.source : `${config.source}/`;
 //config.build[--config.build.length] error
-const dest = config.build[config.build.length - 1] == '/' ? config.build : `${config.build}/`;
-const assets = config.assets[config.assets.length - 1] == '/' ? config.assets : `${config.assets}/`;
+const dest = config.build[config.build.length - 1] === '/' ? config.build : `${config.build}/`;
+const assets = config.assets[config.assets.length - 1] === '/' ? config.assets : `${config.assets}/`;
 const images = {
-  in: src + (config.images[config.images.length - 1] == '/' ? config.images : config.images),
+  in: src + (config.images[config.images.length - 1] === '/' ? config.images : config.images),
   out: dest + assets
 };
 
@@ -131,6 +131,10 @@ function log(msg) {
   console.log(msg);
 }
 
+/**
+ * Gulp tasks
+ */
+
 gulp.task('sass', ['sasslint'], () => {
   return gulp.src('src/sass/main.sass')
     .pipe(sourcemaps.init())
@@ -189,8 +193,8 @@ gulp.task('transpile', ['lint'], () => bundle());
 
 gulp.task('lint', () => {
     return gulp.src(['src/**/*.js', 'gulpfile.babel.js'])
-               .pipe(eslint())
-               .pipe(eslint.format())
+     .pipe(eslint())
+     .pipe(eslint.format())
 });
 
 // added sass
@@ -207,47 +211,16 @@ gulp.task('watch', ['serve'], () => {
   gulp.watch('public/index.html', sync.reload)
 })
 
-
-//import gulp from 'gulp';
-//import browserSync from 'browser-sync';
 //const $ = require('gulp-load-plugins')({lazy: true});
-//import del from 'del';
-//const config = require('./config.js')();
 //import plumber from 'gulp-plumber';
-//import newer from 'gulp-newer';
-//import jshint from 'gulp-jshint';
-//import jade from 'gulp-jade';
 //import concat from 'gulp-concat';
-//import size from 'gulp-size';
-//import uglify from 'gulp-uglify';
 //import deporder from 'gulp-deporder';
-//import postcss from 'gulp-postcss';
 //import autoprefixer from 'autoprefixer';
-//import lost from 'lost';
-//import minifyCss from 'gulp-minify-css';
-//import sourcemaps from 'gulp-sourcemaps';
-//import compass from 'gulp-compass';
-//import rename from "gulp-rename";
 //import iconfont from 'gulp-iconfont';
 //import iconfontCss from 'gulp-iconfont-css';
-//import async from 'async';
-//import consolidate from 'gulp-consolidate';
-//import babel from 'gulp-babel';
-//import gutil from 'gulp-util';
-//import vinylSource from 'vinyl-source-stream';
 //import buffer from 'vinyl-buffer';
-//import babelify from 'babelify';
-//import browserify from 'browserify';
-//import watchify from 'watchify';
-//import assign from 'lodash.assign';
-//import exit from 'gulp-exit';
-//import gulpif from 'gulp-if';
 //import path from 'path';
 //import responsive from 'gulp-responsive';
-
-
-
-
 
 // *****************
 //// add custom browserify options here
@@ -282,57 +255,51 @@ gulp.task('watch', ['serve'], () => {
 //      //.pipe(browsersync().stream());
 //}
 
-//gulp.task('image', () => gulp.src(`${images.in}/*.{jpg,jpeg,png}`)
-//                             .pipe(responsive({
-//                                     // Resize all JPG images to three different sizes: 200, 500, and 630 pixels
-//                                     '*.jpg': [{
-//                                         width: 320,
-//                                         rename: { suffix: '-320px' }
-//                                     },
-//                                         {
-//                                             width: 480,
-//                                             rename: { suffix: '-480px' }
-//                                         },
-//                                         {
-//                                             width: 768,
-//                                             rename: { suffix: '-768px' }
-//                                         },
-//                                         {
-//                                             width: 960,
-//                                             rename: { suffix: '-960px' }
-//                                         },
-//                                         {
-//                                             // Compress, strip metadata, and rename original image
-//                                             rename: { suffix: '-1320px' }
-//                                         }]
-//
-//                                     // Resize all PNG images to be retina ready
-//                                     //'*.png': [{
-//                                     //  width: 320
-//                                     //},
-//                                     //  {
-//                                     //  width: 320 * 2,
-//                                     //  rename: { suffix: '@2x' }
-//                                     //}]
-//                                 },
-//                                 {
-//                                     // Global configuration for all images
-//                                     // The output quality for JPEG, WebP and TIFF output formats
-//                                     quality: 70,
-//                                     // Use progressive (interlace) scan for JPEG and PNG output
-//                                     progressive: true,
-//                                     // Strip all metadata
-//                                     withMetadata: false
-//                                 }))
-//                             .pipe(gulp.dest(`${images.out}img`)));
+gulp.task('image', () => {
+ gulp.src(`${images.in}/*.{jpg,jpeg,png}`)
+    .pipe(responsive({
+     // Resize all JPG images to three different sizes: 200, 500, and 630 pixels
+     '*.jpg': [{
+         width: 320,
+         rename: { suffix: '-320px' }
+        },
+         {
+           width: 480,
+           rename: { suffix: '-480px' }
+         },
+         {
+           width: 768,
+           rename: { suffix: '-768px' }
+         },
+         {
+           width: 960,
+           rename: { suffix: '-960px' }
+         },
+         {
+           // Compress, strip metadata, and rename original image
+           rename: { suffix: '-1320px' }
+         }]
 
-//// rename and uglifies css into min.css
-//gulp.task('rename:css', () => {
-//    gulp.src('build/assets/css/main.css')
-//        .pipe(minifyCss())
-//        .pipe(rename({suffix: '.min'}))
-//        .pipe(gulp.dest('build/assets/css/'));
-//});
+     // Resize all PNG images to be retina ready
+     //'*.png': [{
+     //  width: 320
+     //},
+     //  {
+     //  width: 320 * 2,
+     //  rename: { suffix: '@2x' }
+     //}]
+     },
+     {
+       // Global configuration for all images
+       // The output quality for JPEG, WebP and TIFF output formats
+       quality: 70,
+       // Use progressive (interlace) scan for JPEG and PNG output
+       progressive: true,
+       // Strip all metadata
+       withMetadata: false
+     }))
+   .pipe(gulp.dest(`${images.out}img`))
+});
 
 //// Compile Javascript files
 //gulp.task('babel', function () {
@@ -371,13 +338,12 @@ gulp.task('watch', ['serve'], () => {
 //  }
 //})
 
-//// Creates RWD images and gets icons from source directory
+////Update images on build folder
 //gulp.task('build:images',['image','icons']);
 
-////Update images on build folder
 //gulp.task('icons', () => {
-
-//    return gulp.src([`${images.in}/icons/**`],
+//// Creates RWD images and gets icons from source directory
+//  return gulp.src([`${images.in}/icons/**`],
 //        {base: 'source/assets'})
 //               .pipe($.newer(images.out))
 //               .pipe(gulp.dest(images.out));
@@ -386,9 +352,11 @@ gulp.task('watch', ['serve'], () => {
 
 
 //// Update Favicon on build folder
-//gulp.task('favicon', () => gulp.src(source + config.favicon)
-//                               .pipe($.newer(dest))
-//                               .pipe(gulp.dest(dest)));
+//gulp.task('favicon', () => {
+// gulp.src(source + config.favicon)
+//  .pipe($.newer(dest))
+//  .pipe(gulp.dest(dest))
+//});
 
 
 //gulp.task('iconfont', () => {
@@ -416,38 +384,17 @@ gulp.task('watch', ['serve'], () => {
 
 
 // Build Task
-// TODO include sassLint task
-// TODO Once Browserify is hooked up remove vendors tasks which will be obsolete
 //gulp.task('build', ['clean', 'jade', 'compass', 'babel', 'iconfont',
 // 'favicon', 'build:images', 'watch']);
 
-//// Watch Task
-//// Task dependancy, watch is run when browsersync is finished ['browsersync']
-//gulp.task('watch', ['browsersync'], () => {
-//    // Watch for style changes and compile
-//    gulp.watch([styles.watch], ['compass', browserSync.reload]);
-//    // Watch for jade changes and compile
-//    gulp.watch(views.watch, ['jade']);
-//    // Watch for javascript changes and compile
-//    //gulp.watch(js.in, ['babel']);
-//    //TODO Remove watch task for js files as we are using browserify
-//    gulp.watch(['source/js/main.js',js.in], ['babel', browserSync.reload]);
-//    // Watch for new images and copy
-//    gulp.watch(images.in, ['images']);
-//    // Watch for new vendors and copy
-//    //gulp.watch(vendors.watch, ['vendors']);
-//    gulp.watch('source/assets/fonts/**/*.svg', ['iconfont']);
-//    //gulp.watch('build/assets/css/main.css', ['postcss', browserSync.reload]);
-//});
-
 gulp.task('clean', () => {
   log('-> Cleaning build folder');
-  //del([
-  //    `${dest}*`
-  //]);
   del([
-    'public/*',
-  ])
+      `${dest}*`
+  ]);
+  //del([
+  //  'public/*',
+  //])
 });
 
 
