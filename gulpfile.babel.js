@@ -37,7 +37,7 @@ const images = {
 const styles = {
   in: src + config.sass,
   watch: [`${src + config.sass.substring(0, (config.sass.lastIndexOf('/') + 1))}**/*`],
-  out: dest + (config.css[config.css.length - 1] == '/' ? config.css : config.css + '/'),
+  out: dest + (config.css[config.css.length - 1] === '/' ? config.css : config.css + '/'),
   sassOpt: {
     outputStyle: config.sassOptions.outputStyle || 'compressed',
     imagePath: config.sassOptions.imagePath,
@@ -55,7 +55,7 @@ const styles = {
 };
 
 const js = {
-    in: src + (config.jsDir[config.jsDir.length - 1] == '/' ? config.jsDir + '**/*' : config.jsDir + '/**/*'),
+    in: src + (config.jsDir[config.jsDir.length - 1] === '/' ? config.jsDir + '**/*' : config.jsDir + '/**/*'),
     out: dest + config.jsDir,
     filename: config.jsName
   };
@@ -73,20 +73,20 @@ const syncOpt = {
 };
 
 const vendors = {
-  in: src + (config.vendors[config.vendors.length - 1] == '/' ?
+  in: src + (config.vendors[config.vendors.length - 1] === '/' ?
  `${config.vendors}**/*` : `${config.vendors}/**/*`),
-  out: dest + (config.vendors[config.vendors.length - 1] == '/' ?
+  out: dest + (config.vendors[config.vendors.length - 1] === '/' ?
  config.vendors : config.vendors + '/'),
-  watch: [src + (config.vendors[config.vendors.length - 1] == '/' ?
+  watch: [src + (config.vendors[config.vendors.length - 1] === '/' ?
  config.vendors + '**/*' : config.vendors + '/**/*')]
 };
 
 const fonts = {
-  in: src + (config.fonts[config.fonts.length - 1] == '/' ? config.fonts +
+  in: src + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts +
  '**/*' : config.fonts + '/**/*'),
-  out: dest + (config.fonts[config.fonts.length - 1] == '/' ? config.fonts :
+  out: dest + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts :
  config.fonts + '/'),
-  watch: [src + (config.fonts[config.fonts.length - 1] == '/' ?
+  watch: [src + (config.fonts[config.fonts.length - 1] === '/' ?
  config.fonts + '**/*' : config.fonts + '/**/*')]
 };
 /**

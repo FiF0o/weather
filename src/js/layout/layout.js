@@ -28,3 +28,5 @@ export default class Layout extends React.Component {
     )
   }
 }
+// this.props.children is a placeholder to receive components or anything
+// else from its parent - <Route> are rendered in this.props.children

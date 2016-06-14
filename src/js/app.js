@@ -1,11 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-//TODO Fix JQuery bug... AMD vs browserify?!?
 import JQuery from 'jquery'
-//import CommentBox from './components/comment/comment-box'
 
-//TODO Import Router, Route
-//TODO Import Layout as parent component and inject page & commentbox
 
 import {hashHistory, Router, Route, Redirect} from 'react-router'
 
@@ -17,7 +13,7 @@ import VideoPage from './pages/VideoPage'
 //on this Route, / component Layout is being rendered
 
 /*
-this.props.children are being passed here (nested) when declaring
+this.props.children (<Route>)are being passed here (nested) when declaring
 this.props.children on the parent class 
 */
 const app = (

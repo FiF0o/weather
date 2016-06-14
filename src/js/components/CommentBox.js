@@ -33,7 +33,7 @@ export default class CommentBox extends React.Component {
 
     render() {
         const comments = this._getComments();
-        return(
+        return (
           <div className="row comments-container">
               <div className="cell">
                   <h2>Join The Discussion</h2>
@@ -44,14 +44,22 @@ export default class CommentBox extends React.Component {
                       {this._getPopularMessage(comments.length)}
                       <h3 className="comment-count">{this._getCommentsTitle(comments.length)}</h3>
                       <div className="comment-list">
-                          {comments}
+                          <button onClick={this._toggleComments.bind(this)} >{this.state.showComments ? "Hide" +
+                          " comment" : "Show comment"}</button>
+                          {this.state.showComments ? <div className="comment-list">{comments}</div> : null}
                       </div>
                   </div>
               </div>
           </div>
         );
     }
-
+    //TODO bind(this) at the constructor level to increase perf and not rely
+    // on garbage collector to destroy objects when not used
+    _toggleComments(e) {
+        
+        this.setState({showComments: !this.state.showComments})
+        e.preventDefault();
+    }
     _getAvatars() {
         return this.state.comments.map(comment => comment.avatarUrl);
     }
