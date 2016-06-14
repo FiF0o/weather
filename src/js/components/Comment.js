@@ -3,7 +3,7 @@
  */
 import React from 'react'
 
-import CommentConfirmation from './comment-confirmation'
+import CommentConfirmation from './CommentConfirmation'
 
 
 export default class Comment extends React.Component {

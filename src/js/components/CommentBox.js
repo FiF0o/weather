@@ -4,9 +4,9 @@
 import React from 'react'
 import JQuery from 'jquery'
 
-import CommentForm from './comment-form'
-import CommentAvatarList from './comment-avatar-list'
-import Comment from './comment'
+import CommentForm from './CommentForm'
+import CommentAvatarList from './CommentAvatarList'
+import Comment from './Comment'
 
 export default class CommentBox extends React.Component {
 
@@ -19,8 +19,10 @@ export default class CommentBox extends React.Component {
         };
 
         //pre-bind method to class scope which is CommentBox and can be
-        // passed around without having to use .bin(this) at prop level in
+        // passed around without having to use .bind(this) at prop level in
         // the component below onDelete={}
+        // bind(this) binds the context to the instance of the class rather
+        // than the class itself...
         this._deleteComment = this._deleteComment.bind(this)
         this._addComment = this._addComment.bind(this)
     }

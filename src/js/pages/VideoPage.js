@@ -2,7 +2,7 @@
  * Created by jonlazarini on 13/06/16.
  */
 import React from 'react'
-import CommentBox from '../comment/comment-box'
+import CommentBox from '../components/CommentBox'
 
 export default class VideoPage extends React.Component {
   render() {

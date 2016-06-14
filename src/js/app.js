@@ -9,11 +9,11 @@ import JQuery from 'jquery'
 
 import {hashHistory, Router, Route, Redirect} from 'react-router'
 
-import Layout from './layout/layout'
+import Layout from './layout/Layout'
 
-import BlogPage from './pages/blog-page'
-import PicturePage from './pages/picture-page'
-import VideoPage from './pages/video-page'
+import BlogPage from './pages/BlogPage'
+import PicturePage from './pages/PicturePage'
+import VideoPage from './pages/VideoPage'
 //on this Route, / component Layout is being rendered
 
 /*
@@ -37,7 +37,7 @@ const app = (
 JQuery(function() {
     ReactDOM.render(
     app,
-        document.getElementById('comment-box'),
+        document.getElementById('app'),
         function() {
             console.timeEnd('react-time')
         }
