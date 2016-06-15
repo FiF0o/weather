@@ -15,6 +15,7 @@ export default class CommentBox extends React.Component {
 
         this.state = {
             showComments: false,
+            // will be use to store the array of comment from the API
             comments: []
         };
 
@@ -26,7 +27,8 @@ export default class CommentBox extends React.Component {
         this._deleteComment = this._deleteComment.bind(this)
         this._addComment = this._addComment.bind(this)
     }
-
+    // lifecycle method is used as fetchComments calls render and it will be
+    // an infinite loop...
     componentWillMount() {
         this._fetchComments();
     }
@@ -98,16 +100,31 @@ export default class CommentBox extends React.Component {
     }
 
     _addComment(commentAuthor, commentBody) {
-
+        /*
+        Method is passed down, propagated to the child componentCommentForm as we can pass function as argument - functions are
+        first class citizen - onComment is a prop at the parent component
+        level that will be passed down/called in the child component
+        */
         const comment = {
             id: this.state.comments.length + 1,
             author: commentAuthor,
             body: commentBody,
             avatarUrl: 'assets/images/avatars/avatar-default.png'
         };
-
+        /*
+         Instead of push() which doesnt return the new array but only mutate
+          it, we can also use concat()in the method
+          setState({
+            comments: this.state.concat([comment])
+          })
+         
+          */
+        this.state.comments.push(comment)
+        var comments = this.state.comments
         this.setState({
-            comments: this.state.comments.concat([comment])
+            // Use concat instead of push as concat returns a reference to
+            // the array instead of mutating the array
+            comments
         });
 
     }
@@ -139,6 +156,8 @@ export default class CommentBox extends React.Component {
 
 CommentBox.propTypes = {
     // will define a prop as being mandatory to work
+    // data is propagated from the CommentBox (parent) to the CommentForm
+    // (child)
     apiUrl: React.PropTypes.string.isRequired
 }
 

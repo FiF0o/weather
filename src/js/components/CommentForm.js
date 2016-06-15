@@ -14,11 +14,23 @@ export default class CommentForm extends React.Component {
 
     render() {
         return (
+          /*
+          -> use ref for the onSubmit method to access inputs/fields
+           reference the component in the class from anywhere after it s
+           been rendered
+           this will create a new class property named _body
+           -> renders function will trigger the function on the ref
+
+           onSubmit, onClick are (native) synthetic events which are mapping
+            all the webs browser events, give consistency so that wen
+             browsers have the same behaviours
+          */
           <form className="comment-form" onSubmit={this._handleSubmit.bind(this)}>
               <label>New comment</label>
               <div className="comment-form-fields">
-                  <input placeholder="Name:" ref={c => this._author = c} />
-                  <textarea placeholder="Comment:" ref={c => this._body = c} onChange={this._getCharacterCount.bind(this)}></textarea>
+
+                  <input placeholder="Name:" ref={(input) => this._author = input} />
+                  <textarea placeholder="Comment:" ref={(textarea) => this._body = textarea} onChange={this._getCharacterCount.bind(this)}></textarea>
               </div>
               <p>{this.state.characters} characters</p>
               <div className="comment-form-actions">
@@ -40,7 +52,7 @@ export default class CommentForm extends React.Component {
 
     _handleSubmit(event) {
         event.preventDefault();
-
+        // pass addComment() method from parent component which is CommentBox
         this.props.addComment(this._author.value, this._body.value);
 
         this._author.value = '';
