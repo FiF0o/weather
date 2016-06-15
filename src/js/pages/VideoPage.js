@@ -9,17 +9,13 @@ export default class VideoPage extends React.Component {
     return (
       <div>
         <div className="cell">
-          <article className="article article--video">
-            <div className="article--video-author">
-              Picture by <strong>@video-page</strong>
-            </div>
-
-            <div className="article--video-img">
-              <img src="assets/images/videos" alt=""/>
-            </div>
-          </article>
-        </div>
-
+          <div className="article--video-author">
+            Picture by <strong>@video-page</strong>
+          </div>  
+          <div className="video-wrapper">
+            <iframe width="630" height="315" src="https://www.youtube.com/embed/Ovj4hFxko7c" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div> 
 
         <CommentBox apiUrl="api/comment/comments.json"/>
       </div>

@@ -11,11 +11,11 @@ export default class PicturePage extends React.Component {
         <div className="cell">
           <article className="article article--video">
             <div className="article--video-author">
-              Picture by <strong>@picture-page</strong>
+              Picture by <strong>@adaptive path</strong>
             </div>
 
             <div className="article--video-img">
-              <img src="assets/images/videos" alt=""/>
+              <img src="assets/images/adaptive-paths-guide-to-experience-mapping.jpg" alt=""/>
             </div>
           </article>
         </div>

@@ -1,1 +1,57 @@
 @import 'legacy'
+
+.video-wrapper
+  float: none
+  clear: both
+  width: 100%
+  position: relative
+  // 16:9
+  padding-bottom: 56.25%
+  padding-top: 25px
+  height: 0
+  iframe
+    position: absolute
+    top: 0
+    left: 0
+    width: 100% !important
+    height: 100% !important
+
+
+//.article--video-img-cover
+//  display: block
+//  width: 100%
+//  min-width: 30%
+//  height: auto
+//  //background-image: url(./assets/images/adaptive-paths-guide-to-experience-mapping.jpg)
+//  background-size: cover
+
+img
+  width: 100%
+  height: auto
+
+
+.article--video-img
+  //override default 500px width set by default by the class - inherited from _legacy.scss
+  width: 100%
+
+
+@import '1-tools/mixins'
+
+button
+  height: 44px
+  padding: 0 40px
+  //margin: 0 auto
+  background-color: #6ba2aa
+  border-radius: 10px
+  border: 1px solid #fce87c
+  color: #fce87c
+  text-transform: uppercase
+  +transition(all .2s ease-in-out)
+  &:hover
+    color: #6ba2aa
+    background: #fce87c
+    border: 2px solid #fce87c
+
+
+
+

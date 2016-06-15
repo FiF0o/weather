@@ -17,78 +17,72 @@ import sass from 'gulp-sass';
 import sourcemaps from 'gulp-sourcemaps';
 import plumber from 'gulp-plumber';
 import sassLint from 'gulp-sass-lint';
-import uncss from 'gulp-uncss';
+//import uncss from 'gulp-uncss';
 
 /**
  Config paramaters for Gulp
 */
 import config from './config';
 
-const devBuild = (( config.environment || process.env.NODE_ENV || 'development').trim().toLowerCase() !== 'production');
+// const devBuild = (( config.environment || process.env.NODE_ENV || 'development').trim().toLowerCase() !== 'production');
 const src = config.source[config.source.length - 1] === '/' ? config.source : `${config.source}/`;
 //config.build[--config.build.length] error
 const dest = config.build[config.build.length - 1] === '/' ? config.build : `${config.build}/`;
 const assets = config.assets[config.assets.length - 1] === '/' ? config.assets : `${config.assets}/`;
+//TODO Fix path for images import
 const images = {
   in: src + (config.images[config.images.length - 1] === '/' ? config.images : config.images),
   out: dest + assets
 };
 
-const styles = {
-  in: src + config.sass,
-  watch: [`${src + config.sass.substring(0, (config.sass.lastIndexOf('/') + 1))}**/*`],
-  out: dest + (config.css[config.css.length - 1] === '/' ? config.css : config.css + '/'),
-  sassOpt: {
-    outputStyle: config.sassOptions.outputStyle || 'compressed',
-    imagePath: config.sassOptions.imagePath,
-    precision: config.sassOptions.precision || 3,
-    errLogToConsole: true
-  }
-//  //TODO low - Add option params for autoprefixer
-//  //pleeeaseOpt: {
-//  //  autoprefixer: {browsers: ['last 2 versions', '> 2%']},
-//  //  rem: ['16px'],
-//  //  pseudoElements: true,
-//  //  mqpacker: true,
-//  //  minifier: !devBuild
-//  //}
-};
+//TODO Fix path for sass import when css is transpiled
+// const styles = {
+//   in: src + config.sass,
+//   watch: [`${src + config.sass.substring(0, (config.sass.lastIndexOf('/') + 1))}**/*`],
+//   out: dest + (config.css[config.css.length - 1] === '/' ? config.css : config.css + '/'),
+//   sassOpt: {
+//     outputStyle: config.sassOptions.outputStyle || 'compressed',
+//     imagePath: config.sassOptions.imagePath,
+//     precision: config.sassOptions.precision || 3,
+//     errLogToConsole: true
+//   }
+// };
 
-const js = {
-    in: src + (config.jsDir[config.jsDir.length - 1] === '/' ? config.jsDir + '**/*' : config.jsDir + '/**/*'),
-    out: dest + config.jsDir,
-    filename: config.jsName
-  };
+// const js = {
+//     in: src + (config.jsDir[config.jsDir.length - 1] === '/' ? config.jsDir + '**/*' : config.jsDir + '/**/*'),
+//     out: dest + config.jsDir,
+//     filename: config.jsName
+//   };
 
-const syncOpt = {
-  server: {
-    baseDir: dest,
-    index: config.syncOptions.index || 'index.html'
+// const syncOpt = {
+//   server: {
+//     baseDir: dest,
+//     index: config.syncOptions.index || 'index.html'
+//
+//   },
+//   open: config.syncOptions.open || false,
+//   notify: config.syncOptions.notify || true
+//   //port: process.env.PORT || 3000
+//   //logFileChanges: false
+// };
 
-  },
-  open: config.syncOptions.open || false,
-  notify: config.syncOptions.notify || true
-  //port: process.env.PORT || 3000
-  //logFileChanges: false
-};
+// const vendors = {
+//   in: src + (config.vendors[config.vendors.length - 1] === '/' ?
+//  `${config.vendors}**/*` : `${config.vendors}/**/*`),
+//   out: dest + (config.vendors[config.vendors.length - 1] === '/' ?
+//  config.vendors : config.vendors + '/'),
+//   watch: [src + (config.vendors[config.vendors.length - 1] === '/' ?
+//  config.vendors + '**/*' : config.vendors + '/**/*')]
+// };
 
-const vendors = {
-  in: src + (config.vendors[config.vendors.length - 1] === '/' ?
- `${config.vendors}**/*` : `${config.vendors}/**/*`),
-  out: dest + (config.vendors[config.vendors.length - 1] === '/' ?
- config.vendors : config.vendors + '/'),
-  watch: [src + (config.vendors[config.vendors.length - 1] === '/' ?
- config.vendors + '**/*' : config.vendors + '/**/*')]
-};
-
-const fonts = {
-  in: src + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts +
- '**/*' : config.fonts + '/**/*'),
-  out: dest + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts :
- config.fonts + '/'),
-  watch: [src + (config.fonts[config.fonts.length - 1] === '/' ?
- config.fonts + '**/*' : config.fonts + '/**/*')]
-};
+// const fonts = {
+//   in: src + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts +
+//  '**/*' : config.fonts + '/**/*'),
+//   out: dest + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts :
+//  config.fonts + '/'),
+//   watch: [src + (config.fonts[config.fonts.length - 1] === '/' ?
+//  config.fonts + '**/*' : config.fonts + '/**/*')]
+// };
 /**
  *
  * */
@@ -99,27 +93,27 @@ import * as pkg  from './package.json';
 log(`${pkg.name} ${pkg.version} ${config.environment} build`);
 
 gulp.task('debug', [], () => {
-  log(src)
-  log(`devBuild\n${devBuild}\n\n`)
-  log('dest\n'+dest+'\n\n')
-  log('assets\n'+assets+'\n\n')
-  log('images.in\n'+images.in+'\n\n')
-  log('images.out\n'+images.out+'\n\n')
-  log('styles.in\n'+styles.in+'\n\n')
-  log('styles.out\n'+styles.out+'\n\n')
-  log('styles.watch\n'+styles.watch+'\n\n')
-  log('styles.sassOpt\n'+styles.sassOpt+'\n\n')
-  log('syncOpt\n'+syncOpt+'\n\n')
-  log('js.in\n'+js.in+'\n\n')
-  log('js.out\n'+js.out+'\n\n')
-  //log('js.filename\n'+js.filename+'\n\n')
-  log('vendors.in\n'+vendors.in+'\n\n')
-  log('vendors.out\n'+vendors.out+'\n\n')
-  log('vendors.watch\n'+vendors.watch+'\n\n')
-  log('fonts.in\n'+fonts.in+'\n\n')
-  log('fonts.out\n'+fonts.out+'\n\n')
-  log('fonts.watch\n'+fonts.watch+'\n\n')
-})
+  // log(src)
+  // log(`devBuild\n${devBuild}\n\n`)
+  // log('dest\n'+dest+'\n\n')
+  // log('assets\n'+assets+'\n\n')
+  // log('images.in\n'+images.in+'\n\n')
+  // log('images.out\n'+images.out+'\n\n')
+  // log('styles.in\n'+styles.in+'\n\n')
+  // log('styles.out\n'+styles.out+'\n\n')
+  // log('styles.watch\n'+styles.watch+'\n\n')
+  // log('styles.sassOpt\n'+styles.sassOpt+'\n\n')
+  // log('syncOpt\n'+syncOpt+'\n\n')
+  // log('js.in\n'+js.in+'\n\n')
+  // log('js.out\n'+js.out+'\n\n')
+  // //log('js.filename\n'+js.filename+'\n\n')
+  // log('vendors.in\n'+vendors.in+'\n\n')
+  // log('vendors.out\n'+vendors.out+'\n\n')
+  // log('vendors.watch\n'+vendors.watch+'\n\n')
+  // log('fonts.in\n'+fonts.in+'\n\n')
+  // log('fonts.out\n'+fonts.out+'\n\n')
+  // log('fonts.watch\n'+fonts.watch+'\n\n')
+});
 
 const sync = browserSync.create();
 
@@ -150,8 +144,10 @@ gulp.task('sass', ['sasslint'], () => {
 });
 
 gulp.task('sasslint', () => {
+  //TODO Fix task linting breaks pipe when declaring mixing with string
+  // interpolation
   //gulp.src([`${styles.watch}.s+(a|c)ss`, '!node_modules/**'])
-  gulp.src([`src/sass/**/*.s+(a|c)ss`, '!node_modules/**'])
+  gulp.src([`src/sass/**/*.s+(a|c)ss`, '!node_modules/**', '!src/sass/1-tools/**'])
     .pipe(sassLint())
     .pipe(sassLint.format())
     .pipe(sassLint.failOnError());
@@ -198,18 +194,18 @@ gulp.task('lint', () => {
 });
 
 // added sass
-gulp.task('serve', ['transpile', 'sass'], () => sync.init({ server: 'public' }))
+gulp.task('serve', ['transpile', 'sass'], () => sync.init({ server: 'public' }));
 gulp.task('js-watch', ['transpile'], () => sync.reload());
 gulp.task('sass-watch', ['sass'], () => sync.reload());
 
 gulp.task('watch', ['serve'], () => {
-  gulp.watch('src/**/*', ['js-watch'])
-  gulp.watch('src/sass/**/*.sass', ['sass-watch'])
+  gulp.watch('src/**/*', ['js-watch']);
+  gulp.watch('src/sass/**/*.sass', ['sass-watch']);
   //gulp.watch('public/assets/style.css', sync.reload)
-  gulp.watch('src/sass/**/*.sass', sync.reload)
+  gulp.watch('src/sass/**/*.sass', sync.reload);
   // add task for sass watch here
-  gulp.watch('public/index.html', sync.reload)
-})
+  gulp.watch('public/index.html', sync.reload);
+});
 
 //const $ = require('gulp-load-plugins')({lazy: true});
 //import plumber from 'gulp-plumber';
