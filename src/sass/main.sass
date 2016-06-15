@@ -38,19 +38,20 @@ img
 @import '1-tools/mixins'
 
 button
-  height: 44px
-  padding: 0 40px
-  //margin: 0 auto
-  background-color: #6ba2aa
-  border-radius: 10px
-  border: 1px solid #fce87c
-  color: #fce87c
-  text-transform: uppercase
-  +transition(all .2s ease-in-out)
-  &:hover
-    color: #6ba2aa
-    background: #fce87c
-    border: 2px solid #fce87c
+  &.button-secondary
+    height: 44px
+    padding: 0 40px
+    margin: 0 auto
+    background-color: #6ba2aa
+    border-radius: 10px
+    border: 1px solid #fce87c
+    color: #fce87c
+    text-transform: uppercase
+    +transition(all .2s ease-in-out)
+    &:hover
+      color: #6ba2aa
+      background: #fce87c
+      border: 2px solid #fce87c
 
 
 

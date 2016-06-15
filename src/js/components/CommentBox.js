@@ -44,7 +44,7 @@ export default class CommentBox extends React.Component {
                       {this._getPopularMessage(comments.length)}
                       <h3 className="comment-count">{this._getCommentsTitle(comments.length)}</h3>
                       <div className="comment-list">
-                          <button onClick={this._toggleComments.bind(this)} >{this.state.showComments ? "Hide" +
+                          <button className="button-secondary" onClick={this._toggleComments.bind(this)} >{this.state.showComments ? "Hide" +
                           " comment" : "Show comment"}</button>
                           {this.state.showComments ? <div className="comment-list">{comments}</div> : null}
                       </div>
