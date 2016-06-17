@@ -24,7 +24,7 @@ import sassLint from 'gulp-sass-lint';
 */
 import config from './config';
 
-// const devBuild = (( config.environment || process.env.NODE_ENV || 'development').trim().toLowerCase() !== 'production');
+const devBuild = (( config.environment || process.env.NODE_ENV || 'development').trim().toLowerCase() !== 'production');
 const src = config.source[config.source.length - 1] === '/' ? config.source : `${config.source}/`;
 //config.build[--config.build.length] error
 const dest = config.build[config.build.length - 1] === '/' ? config.build : `${config.build}/`;
@@ -36,53 +36,53 @@ const images = {
 };
 
 //TODO Fix path for sass import when css is transpiled
-// const styles = {
-//   in: src + config.sass,
-//   watch: [`${src + config.sass.substring(0, (config.sass.lastIndexOf('/') + 1))}**/*`],
-//   out: dest + (config.css[config.css.length - 1] === '/' ? config.css : config.css + '/'),
-//   sassOpt: {
-//     outputStyle: config.sassOptions.outputStyle || 'compressed',
-//     imagePath: config.sassOptions.imagePath,
-//     precision: config.sassOptions.precision || 3,
-//     errLogToConsole: true
-//   }
-// };
+const styles = {
+  in: src + config.sass,
+  watch: [`${src + config.sass.substring(0, (config.sass.lastIndexOf('/') + 1))}**/*`],
+  out: dest + (config.css[config.css.length - 1] === '/' ? config.css : config.css + '/'),
+  sassOpt: {
+    outputStyle: config.sassOptions.outputStyle || 'compressed',
+    imagePath: src + config.sassOptions.imagePath,
+    precision: config.sassOptions.precision || 3,
+    errLogToConsole: true
+  }
+};
 
-// const js = {
-//     in: src + (config.jsDir[config.jsDir.length - 1] === '/' ? config.jsDir + '**/*' : config.jsDir + '/**/*'),
-//     out: dest + config.jsDir,
-//     filename: config.jsName
-//   };
+const js = {
+    in: src + (config.jsDir[config.jsDir.length - 1] === '/' ? config.jsDir + '**/*' : config.jsDir + '/**/*'),
+    out: dest + config.jsDir,
+    filename: config.jsName
+  };
 
-// const syncOpt = {
-//   server: {
-//     baseDir: dest,
-//     index: config.syncOptions.index || 'index.html'
-//
-//   },
-//   open: config.syncOptions.open || false,
-//   notify: config.syncOptions.notify || true
-//   //port: process.env.PORT || 3000
-//   //logFileChanges: false
-// };
+const syncOpt = {
+  server: {
+    baseDir: dest,
+    index: config.syncOptions.index || 'index.html'
 
-// const vendors = {
-//   in: src + (config.vendors[config.vendors.length - 1] === '/' ?
-//  `${config.vendors}**/*` : `${config.vendors}/**/*`),
-//   out: dest + (config.vendors[config.vendors.length - 1] === '/' ?
-//  config.vendors : config.vendors + '/'),
-//   watch: [src + (config.vendors[config.vendors.length - 1] === '/' ?
-//  config.vendors + '**/*' : config.vendors + '/**/*')]
-// };
+  },
+  open: config.syncOptions.open || false,
+  notify: config.syncOptions.notify || true
+  //port: process.env.PORT || 3000
+  //logFileChanges: false
+};
 
-// const fonts = {
-//   in: src + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts +
-//  '**/*' : config.fonts + '/**/*'),
-//   out: dest + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts :
-//  config.fonts + '/'),
-//   watch: [src + (config.fonts[config.fonts.length - 1] === '/' ?
-//  config.fonts + '**/*' : config.fonts + '/**/*')]
-// };
+const vendors = {
+  in: src + (config.vendors[config.vendors.length - 1] === '/' ?
+ `${config.vendors}**/*` : `${config.vendors}/**/*`),
+  out: dest + (config.vendors[config.vendors.length - 1] === '/' ?
+ config.vendors : config.vendors + '/'),
+  watch: [src + (config.vendors[config.vendors.length - 1] === '/' ?
+ config.vendors + '**/*' : config.vendors + '/**/*')]
+};
+
+const fonts = {
+  in: src + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts +
+ '**/*' : config.fonts + '/**/*'),
+  out: dest + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts :
+ config.fonts + '/'),
+  watch: [src + (config.fonts[config.fonts.length - 1] === '/' ?
+ config.fonts + '**/*' : config.fonts + '/**/*')]
+};
 /**
  *
  * */
@@ -99,9 +99,11 @@ gulp.task('debug', [], () => {
   // log('assets\n'+assets+'\n\n')
   // log('images.in\n'+images.in+'\n\n')
   // log('images.out\n'+images.out+'\n\n')
-  // log('styles.in\n'+styles.in+'\n\n')
-  // log('styles.out\n'+styles.out+'\n\n')
-  // log('styles.watch\n'+styles.watch+'\n\n')
+  log('styles.in\n'+styles.in+'\n\n')
+  log('styles.out\n'+styles.out+'\n\n')
+  //log('styles.watch\n'+styles.watch+'\n\n')
+  //log(`${styles.watch}.s+(a|c)ss`)
+  //log('config.sassOptions\n' + styles.sassOpt.imagePath + '\n\n')
   // log('styles.sassOpt\n'+styles.sassOpt+'\n\n')
   // log('syncOpt\n'+syncOpt+'\n\n')
   // log('js.in\n'+js.in+'\n\n')
@@ -130,24 +132,32 @@ function log(msg) {
  */
 
 gulp.task('sass', ['sasslint'], () => {
-  return gulp.src('src/sass/main.sass')
+  // return gulp.src('src/sass/main.sass')
+  return gulp.src(styles.in)
     .pipe(sourcemaps.init())
     .pipe(plumber())
     .pipe(sass(
       {
-        //outputStyle: 'compressed'
+        // indentedSyntax: ,
+        // sourceMap: ,
+        // sourceComment: ,
+        outputStyle: styles.sassOpt.outputStyle,
+        image: styles.sassOpt.imagePath,
+        precision: styles.sassOpt.precision,
+        error: styles.sassOpt.errLogToConsole
       }
     )
     .on('error', sass.logError))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('public/assets'));
+    // .pipe(gulp.dest('public/assets'));
+    .pipe(gulp.dest(styles.out));
 });
 
 gulp.task('sasslint', () => {
   //TODO Fix task linting breaks pipe when declaring mixing with string
   // interpolation
   //gulp.src([`${styles.watch}.s+(a|c)ss`, '!node_modules/**'])
-  gulp.src([`src/sass/**/*.s+(a|c)ss`, '!node_modules/**', '!src/sass/1-tools/**'])
+  gulp.src([`${styles.watch}.s+(a|c)ss`, '!node_modules/**', '!src/sass/1-tools/**'])
     .pipe(sassLint())
     .pipe(sassLint.format())
     .pipe(sassLint.failOnError());
@@ -188,13 +198,19 @@ gulp.task('default', ['transpile, sass']);
 gulp.task('transpile', ['lint'], () => bundle());
 
 gulp.task('lint', () => {
-    return gulp.src(['src/**/*.js', 'gulpfile.babel.js'])
+    return gulp.src([`${src}/**/*.js`, 'gulpfile.babel.js'])
      .pipe(eslint())
      .pipe(eslint.format())
 });
 
 // added sass
-gulp.task('serve', ['transpile', 'sass'], () => sync.init({ server: 'public' }));
+gulp.task('serve', ['transpile', 'sass'], () => sync.init({ 
+  server: {
+    baseDir: syncOpt.server.baseDir,
+    index: syncOpt.server.index
+  }
+}));
+
 gulp.task('js-watch', ['transpile'], () => sync.reload());
 gulp.task('sass-watch', ['sass'], () => sync.reload());
 
@@ -207,14 +223,8 @@ gulp.task('watch', ['serve'], () => {
   gulp.watch('public/index.html', sync.reload);
 });
 
-//const $ = require('gulp-load-plugins')({lazy: true});
-//import plumber from 'gulp-plumber';
-//import concat from 'gulp-concat';
-//import deporder from 'gulp-deporder';
-//import autoprefixer from 'autoprefixer';
 //import iconfont from 'gulp-iconfont';
 //import iconfontCss from 'gulp-iconfont-css';
-//import buffer from 'vinyl-buffer';
 //import path from 'path';
 //import responsive from 'gulp-responsive';
 

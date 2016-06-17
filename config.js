@@ -37,7 +37,7 @@ const config = {
      */
     sass: 'sass/main.sass',
     // Dir where the sass will be compiled
-    css: 'assets/css',
+    css: 'css',
     // Favicon
     favicon: 'favicon.ico',
     // This are the options that will be passed to the sass compiler
@@ -52,7 +52,8 @@ const config = {
          */
         outputStyle: 'expanded',
         // Relative path to the css where the images dir is.
-        imagePath: '../images',
+        //TODO Fix relative path for css images...
+        imagePath: 'assets/images',
         // Sass precision
         precision: 3
     },
