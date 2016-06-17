@@ -13,6 +13,8 @@ export default class Comment extends React.Component {
     this.state = {
       isAbusive: false
     };
+    this._handleDelete = this._handleDelete.bind(this)
+    this._toggleAbuse = this._toggleAbuse.bind(this)
   }
 
   render() {
@@ -32,10 +34,10 @@ export default class Comment extends React.Component {
 
         <p className="comment-header">{this.props.author}</p>
         <p className="comment-body">{commentBody}</p>
-
+        //TODO Fix toggle abuse to have Yes No text displayed and pop up onDelete
         <div className="comment-actions">
-          <CommentConfirmation onDelete={this._handleDelete.bind(this)} />
-          <a href="#" onClick={this._toggleAbuse.bind(this)}>Report as Abuse</a>
+          <CommentConfirmation onDelete={this._handleDelete} />
+          <a href="#" onClick={this._toggleAbuse}>Report as Abuse</a>
         </div>
       </div>
     );
@@ -50,6 +52,15 @@ export default class Comment extends React.Component {
   }
 
   _handleDelete() {
-    this.props.onDelete(this.props.id);
+    //event.preventDefault();
+    //calls pop-up to confirm delete
+    //TODO Move to report as abuse button
+    if (confirm('Are you sure?')) {
+      //passing down function form parent to comment by calling the onDelete prop
+      //assigning the comment from the parent as parameter of the function to
+      // the child component
+      this.props.onDelete(this.props.comment);
+      //this.props.onDelete(this.props.id);
+    }
   }
 }

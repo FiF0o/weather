@@ -28,6 +28,7 @@ export default class CommentBox extends React.Component {
         */
         this._deleteComment = this._deleteComment.bind(this)
         this._addComment = this._addComment.bind(this)
+        this._toggleComments = this._toggleComments.bind(this)
     }
     /*
      lifecycle method is used as fetchComments calls render and it will be
@@ -67,7 +68,7 @@ export default class CommentBox extends React.Component {
                       {this._getPopularMessage(comments.length)}
                       <h3 className="comment-count">{this._getCommentsTitle(comments.length)}</h3>
                       <div className="comment-list">
-                          <button className="button-secondary" onClick={this._toggleComments.bind(this)} >{this.state.showComments ? "Hide" +
+                          <button className="button-secondary" onClick={this._toggleComments} >{this.state.showComments ? "Hide" +
                           " comment" : "Show comment"}</button>
                           {this.state.showComments ? <div className="comment-list">{comments}</div> : null}
                       </div>
@@ -109,6 +110,26 @@ export default class CommentBox extends React.Component {
             // onDelete - declare this._deleteComment in constructor
         });
     }
+    /**
+     * server side
+    */
+     
+     _deleteComment() {
+        JQuery.ajax({
+            method: 'DELETE',
+            url:`/api/comments/${comment.id}`
+        });
+        /*
+        * optimistic update
+        * 1- create new array by copying elements of the state - clone array
+        * 2- find Index of the comment to be deleted in the array
+        * 3- delete at 1 comment at the position index
+        * */
+        const comments = [...this.state.comments];
+        const commentIndex = comments.indexOf(comment);
+        comments.splice(commentIndex, 1);
+        this.setState({ comments });
+    }
 
     _getCommentsTitle(commentCount) {
         if (commentCount === 0) {
@@ -147,6 +168,20 @@ export default class CommentBox extends React.Component {
             // the array instead of mutating the array
             comments
         });
+
+      /**
+       *  ADD COMMENT GENERATED ON SERVER SIDE (above is client side)
+       * One way control flow example
+       *
+       *
+       *  const comment= { author, body };
+       *
+       *  JQuery.post('/api/comments', { comment })
+       *    .success(newComment => {
+       *        this.setState({comments:
+        *        this.state.comments.concat([newComment])});
+       *    });
+       */
 
     }
 
