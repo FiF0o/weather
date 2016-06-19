@@ -22,7 +22,8 @@ import sassLint from 'gulp-sass-lint';
 import responsive from 'gulp-responsive';
 import iconfont from 'gulp-iconfont';
 import iconfontCss from 'gulp-iconfont-css';
-import uncss from 'gulp-uncss';
+//TODO Fix error thrown in sass pipe
+//import uncss from 'gulp-uncss';
 
 /**
  Config paramaters for Gulp
@@ -39,7 +40,6 @@ const images = {
   in: src + (config.images[config.images.length - 1] === '/' ? config.images : config.images),
   out: dest + assets
 };
-
 const styles = {
   in: src + config.sass,
   watch: [`${src + config.sass.substring(0, (config.sass.lastIndexOf('/') + 1))}**/*`],
@@ -51,7 +51,6 @@ const styles = {
     errLogToConsole: true
   }
 };
-
 const js = {
     // in: src + (config.jsDir[config.jsDir.length - 1] === '/' ? config.jsDir + '**/*' : config.jsDir + '/**/*'),
     in: src + (config.jsDir[config.jsDir.length - 1] === '/' ? config.jsDir : config.jsDir + '/'),
@@ -60,7 +59,6 @@ const js = {
   // 1))}**/*`],
     filename: config.jsName
   };
-
 const syncOpt = {
   server: {
     baseDir: dest,
@@ -72,7 +70,6 @@ const syncOpt = {
   //port: process.env.PORT || 3000
   //logFileChanges: false
 };
-
 const vendors = {
   in: src + (config.vendors[config.vendors.length - 1] === '/' ?
  `${config.vendors}**/*` : `${config.vendors}/**/*`),
@@ -81,7 +78,6 @@ const vendors = {
   watch: [src + (config.vendors[config.vendors.length - 1] === '/' ?
  config.vendors + '**/*' : config.vendors + '/**/*')]
 };
-
 const fonts = {
   in: src + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts +
  '**/*' : config.fonts + '/**/*'),
@@ -228,41 +224,6 @@ gulp.task('watch', ['serve'], () => {
   gulp.watch(`${dest}/index.html`, sync.reload);
 });
 
-//import path from 'path';
-
-// *****************
-//// add custom browserify options here
-//var customOpts = {
-//  entries: ['./source/assets/js/functions.js'],
-//  debug: true,
-//  transform: [babelify],
-//  // require: { jquery: 'jquery-browserify' }
-//};
-//var opts = assign({}, watchify.args, customOpts);
-//var b = watchify(browserify(opts));
-//
-//// add transformations here
-//// i.e. b.transform(coffeeify);
-//
-//gulp.task('zarm', bundle); // so you can run `gulp js` to build the file
-//b.on('update', bundle); // on any dep update, runs the bundler
-//b.on('log', gutil.log); // output build logs to terminal
-//
-//function bundle() {
-//  return b.bundle()
-//      // log errors if they happen
-//      .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-//      .pipe(vinylSource('app.js'))
-//      // optional, remove if you don't need to buffer file contents
-//      .pipe(buffer())
-//      // optional, remove if you dont want sourcemaps
-//      .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
-//      // Add transformation tasks to the pipeline here.
-//      .pipe(sourcemaps.write('./')) // writes .map file
-//      .pipe(gulp.dest('./build/assets/js'))
-//      //.pipe(browsersync().stream());
-//}
-
 gulp.task('image', () => {
   // removed svg and png format as it errors
  gulp.src(`${images.in}/**/*.{jpg,jpeg}`)
@@ -315,42 +276,6 @@ gulp.task('image-icon', () => {
 gulp.task('image:all',['image', 'image-icon', 'image-svg']);
 
 gulp.task('image-watch', ['image:all'], () => sync.reload());
-//// Compile Javascript files
-//gulp.task('babel', function () {
-//  // to compress Js, update variable environement in config.js to 'production'
-//  if (devBuild) {
-//    log('-----> Compiling Javascript for Development <-----')
-//    return gulp.src(js.in)
-//        .pipe(sourcemaps.init())
-//        .pipe($.plumber())
-//        .pipe($.newer(js.out))
-//        .pipe($.jshint())
-//        .pipe($.jshint.reporter('jshint-stylish', {verbose: true}))
-//        //.pipe($.jshint.reporter('fail'))
-//        .pipe(babel())
-//        .pipe($.concat(js.filename))
-//        .pipe(sourcemaps.write('.'))
-//        .pipe(gulp.dest(js.out));
-//  } else {
-//    log('-----> Compiling Javascript for Production <-----')
-//    del([
-//      dest + 'js/*'
-//    ]);
-//    return gulp.src(js.in)
-//        .pipe(sourcemaps.init())
-//        .pipe($.plumber())
-//        .pipe(babel())
-//        .pipe($.deporder())
-//        .pipe($.size({title: 'Javascript In Size'}))
-//        .pipe($.concat(js.filename))
-//        .pipe($.stripDebug())
-//        //.pipe($.uglify())
-//        .pipe(rename({suffix: '.min'}))
-//        .pipe($.size({title: 'Javascript Out Size'}))
-//        .pipe(sourcemaps.write('.'))
-//        .pipe(gulp.dest(js.out));
-//  }
-//})
 
 gulp.task('favicon', () => {
   gulp.src(source + config.favicon)
@@ -390,7 +315,6 @@ gulp.task('clean', () => {
       `${dest}*`
   ]);
 });
-
 
 //TODO Update Help section with new tasks
 gulp.task('help', () => {
