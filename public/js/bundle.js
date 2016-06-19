@@ -35910,7 +35910,7 @@ var PicturePage = function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'article--video-img' },
-              _react2.default.createElement('img', { src: 'assets/images/adaptive-paths-guide-to-experience-mapping.jpg', alt: '' })
+              _react2.default.createElement('img', { src: 'assets/images/adaptive-paths-guide-to-experience-mapping-1320px.jpg', alt: '' })
             )
           )
         ),

@@ -19,8 +19,10 @@ import sass from 'gulp-sass';
 import sourcemaps from 'gulp-sourcemaps';
 import plumber from 'gulp-plumber';
 import sassLint from 'gulp-sass-lint';
-
-//import uncss from 'gulp-uncss';
+import responsive from 'gulp-responsive';
+import iconfont from 'gulp-iconfont';
+import iconfontCss from 'gulp-iconfont-css';
+import uncss from 'gulp-uncss';
 
 /**
  Config paramaters for Gulp
@@ -38,7 +40,6 @@ const images = {
   out: dest + assets
 };
 
-//TODO Fix path for sass import when css is transpiled
 const styles = {
   in: src + config.sass,
   watch: [`${src + config.sass.substring(0, (config.sass.lastIndexOf('/') + 1))}**/*`],
@@ -92,25 +93,18 @@ const fonts = {
 /**
  *
  * */
-
 // import it/eveything as an object to return objects and give it an alias to
 // use as variable to create objects - string interpolation
 import * as pkg  from './package.json';
 log(`${pkg.name} ${pkg.version} ${config.environment} build`);
 
 gulp.task('debug', [], () => {
-  log(images.in)
-  log(images.out)
-  log('vendors.in\n'+vendors.in+'\n\n')
-  log('vendors.out\n'+vendors.out+'\n\n')
-  log('vendors.watch\n'+vendors.watch+'\n\n')
-  log('fonts.in\n'+fonts.in+'\n\n')
-  log('fonts.out\n'+fonts.out+'\n\n')
-  log('fonts.watch\n'+fonts.watch+'\n\n')
+  log(fonts.in)
+  log(fonts.out)
+  
 });
 
 const sync = browserSync.create();
-
 /**
  * Custom functions
  */
@@ -160,6 +154,7 @@ gulp.task('sass', ['sasslint'], () => {
       }
     )
     .on('error', sass.logError))
+    //.pipe(uncss({html:['index.html', '']}))
     .pipe(sourcemaps.write('.'))
     // .pipe(gulp.dest('public/assets'));
     .pipe(gulp.dest(styles.out));
@@ -174,9 +169,6 @@ gulp.task('sasslint', () => {
     .pipe(sassLint.format())
     .pipe(sassLint.failOnError());
 });
-//gulp.task('sass:watch', () => {
-//  gulp.watch('src/sass/**/*.sass', ['sass']);
-//});
 
 // Input file.
 watchify.args.debug = true;
@@ -217,7 +209,7 @@ gulp.task('lint', () => {
 });
 
 // added sass
-gulp.task('serve', ['basics', 'sass', 'transpile'], () => sync.init({ 
+gulp.task('serve', ['basics', 'sass', 'transpile', 'image:all'], () => sync.init({ 
   server: {
     baseDir: syncOpt.server.baseDir,
     index: syncOpt.server.index
@@ -236,10 +228,7 @@ gulp.task('watch', ['serve'], () => {
   gulp.watch(`${dest}/index.html`, sync.reload);
 });
 
-//import iconfont from 'gulp-iconfont';
-//import iconfontCss from 'gulp-iconfont-css';
 //import path from 'path';
-//import responsive from 'gulp-responsive';
 
 // *****************
 //// add custom browserify options here
@@ -275,39 +264,29 @@ gulp.task('watch', ['serve'], () => {
 //}
 
 gulp.task('image', () => {
- gulp.src(`${images.in}/*.{jpg,jpeg,png}`)
+  // removed svg and png format as it errors
+ gulp.src(`${images.in}/**/*.{jpg,jpeg}`)
     .pipe(responsive({
+      
      // Resize all JPG images to three different sizes: 200, 500, and 630 pixels
-     '*.jpg': [{
-         width: 320,
-         rename: { suffix: '-320px' }
-        },
-         {
-           width: 480,
-           rename: { suffix: '-480px' }
-         },
-         {
-           width: 768,
-           rename: { suffix: '-768px' }
-         },
-         {
-           width: 960,
-           rename: { suffix: '-960px' }
-         },
-         {
-           // Compress, strip metadata, and rename original image
-           rename: { suffix: '-1320px' }
-         }]
+     '*.jpg': [
+       {width: 320, rename: { suffix: '-320px' }},
+         {width: 480, rename: { suffix: '-480px' }},
+         {width: 768,rename: { suffix: '-768px' }},
+         {width: 960, rename: { suffix: '-960px' }},
+         {rename: { suffix: '-1320px' }}
+     ],
 
-     // Resize all PNG images to be retina ready
-     //'*.png': [{
-     //  width: 320
-     //},
-     //  {
-     //  width: 320 * 2,
-     //  rename: { suffix: '@2x' }
-     //}]
-     },
+     // // Resize all PNG images to be retina ready
+     // '*.png': [
+     //   {width: 120}, 
+     //   {width: 120 * 2, rename: { suffix: '@2x' }}
+     // ],
+     //  '*.svg': [
+     //    {width: 123, }
+     //  ]
+    },
+      {strictMatchImages: false},
      {
        // Global configuration for all images
        // The output quality for JPEG, WebP and TIFF output formats
@@ -317,9 +296,25 @@ gulp.task('image', () => {
        // Strip all metadata
        withMetadata: false
      }))
-   .pipe(gulp.dest(`${images.out}img`))
+   .pipe(gulp.dest(`${images.out}images`))
 });
 
+gulp.task('image-svg', () => {
+  return gulp.src([`${images.in}/**/*.svg`])
+    .pipe(gulp.dest(`${images.out}images`))
+  
+});
+
+gulp.task('image-icon', () => {
+  return gulp.src([`${images.in}/**/*.png`])
+    .pipe(gulp.dest(`${images.out}images`))
+
+});
+
+//TODO Refactor with image task, error is thrown for icons .png...
+gulp.task('image:all',['image', 'image-icon', 'image-svg']);
+
+gulp.task('image-watch', ['image:all'], () => sync.reload());
 //// Compile Javascript files
 //gulp.task('babel', function () {
 //  // to compress Js, update variable environement in config.js to 'production'
@@ -357,63 +352,43 @@ gulp.task('image', () => {
 //  }
 //})
 
-////Update images on build folder
-//gulp.task('build:images',['image','icons']);
+gulp.task('favicon', () => {
+  gulp.src(source + config.favicon)
+   .pipe(gulp.dest(dest))
+});
 
-//TODO Refactor in the gulp image task
-//gulp.task('icons', () => {
-//// Creates icons from source directory
-//  return gulp.src([`${images.in}/icons/**`],
-//        {base: 'source/assets'})
-//               .pipe($.newer(images.out))
-//               .pipe(gulp.dest(images.out));
-//});
-
-
-//// Update Favicon on build folder
-//gulp.task('favicon', () => {
-// gulp.src(source + config.favicon)
-//  .pipe($.newer(dest))
-//  .pipe(gulp.dest(dest))
-//});
-
-
-//gulp.task('iconfont', () => {
-//    const fontName = 'icons';
-//    const runTimestamp = Math.round(Date.now()/1000);
-//    //TODO change base: to global var
-//    gulp.src([fonts.in], {base: 'source/assets'})
-//        .pipe(iconfontCss({
-//            fontName,
-//            path: 'source/sass/1-tools/_fonticon.scss',
-//            // after Mixin has been executed
-//            targetPath: '../../../source/sass/5-custom/_fonticon.scss/',
-//            fontPath: '../../assets/fonts/'
-//        }))
-//        .pipe(iconfont({
-//            fontName,
-//            formats: ['ttf','eot','woff','svg'],
-//            normalize: true,
-//            fontHeight: 1001,
-//            prependUnicode: true, //
-//            timestamp: runTimestamp// recommended opt
-//        }))
-//        .pipe(gulp.dest(fonts.out));
-//});
-
-
-// Build Task
-//gulp.task('build', ['clean', 'jade', 'compass', 'babel', 'iconfont',
-// 'favicon', 'build:images', 'watch']);
+gulp.task('font-icon', () => {
+  // name to be used when calling the css class
+   const fontName = 'icons';
+   const runTimestamp = Math.round(Date.now()/1000);
+   //TODO change base: to var from config
+  //base gives relative path starting from the base object
+   gulp.src([fonts.in], {base: 'src/assets'})
+       .pipe(iconfontCss({
+           fontName,
+           path: 'src/sass/1-tools/_fonticon.scss',
+           // location to output font file after Mixin has been executed
+           targetPath: '../../../src/sass/_font-icon.scss',
+          // path to get the font to  where it will be transformed -
+          // relative to dist dir
+           fontPath: '../assets/fonts/'
+       }))
+       .pipe(iconfont({
+           fontName,
+           formats: ['ttf','eot','woff','svg'],
+           normalize: true,
+           fontHeight: 1001,
+           prependUnicode: true, //
+           timestamp: runTimestamp// recommended opt
+       }))
+       .pipe(gulp.dest(fonts.out));
+});
 
 gulp.task('clean', () => {
   log('-> Cleaning build folder');
   del([
       `${dest}*`
   ]);
-  //del([
-  //  'public/*',
-  //])
 });
 
 

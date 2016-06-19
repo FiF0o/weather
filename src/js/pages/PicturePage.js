@@ -15,7 +15,7 @@ export default class PicturePage extends React.Component {
             </div>
 
             <div className="article--video-img">
-              <img src="assets/images/adaptive-paths-guide-to-experience-mapping.jpg" alt=""/>
+              <img src="assets/images/adaptive-paths-guide-to-experience-mapping-1320px.jpg" alt=""/>
             </div>
           </article>
         </div>

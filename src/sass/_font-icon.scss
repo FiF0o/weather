@@ -1,0 +1,82 @@
+// ************************** DO NOT EDIT  ************************** //
+// Mixins to create/generate font file containing the icons tobe used
+// ************************** DO NOT EDIT  ************************** //
+
+// Import your svg to be converted into css font @font-face in the folder source/assets/fonts/
+
+//font is available in build/assets/fonts
+// scss file is available in source/1-tools/_font.scss
+// After the Gulp task, the new font icon file _icon.scss will be compiled into 5-custom
+// font-face will be prefixed by icon-
+// to use an icon use the classname prefixed by icon- e.g. .icon-myfonticon
+
+
+//TODO rename file and script to fonticon
+
+@font-face {
+  font-family: "icons";
+  src: url('../assets/fonts/icons.eot');
+  src: url('../assets/fonts/icons.eot?#iefix') format('eot'),
+  url('../assets/fonts/icons.woff') format('woff'),
+  url('../assets/fonts/icons.ttf') format('truetype'),
+  url('../assets/fonts/icons.svg#icons') format('svg');
+}
+
+@mixin icon-styles {
+  font-family: "icons";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  // speak: none; // only necessary if not using the private unicode range (firstGlyph option)
+  text-decoration: none;
+  text-transform: none;
+}
+
+%icon {
+  @include icon-styles;
+}
+
+@function icon-char($filename) {
+  $char: "";
+
+  @if $filename == compass2 {
+  $char: "\E001";
+}
+  @if $filename == css3 {
+  $char: "\E002";
+}
+  @if $filename == dribbble {
+  $char: "\E003";
+}
+  @if $filename == dropbox {
+  $char: "\E004";
+}
+
+@return $char;
+}
+
+@mixin icon($filename, $insert: before, $extend: true) {
+&:#{$insert} {
+  @if $extend {
+    @extend %icon;
+  } @else {
+    @include icon-styles;
+  }
+  content: icon-char($filename);
+}
+}
+
+.icon-compass2 {
+  @include icon(compass2);
+}
+.icon-css3 {
+  @include icon(css3);
+}
+.icon-dribbble {
+  @include icon(dribbble);
+}
+.icon-dropbox {
+  @include icon(dropbox);
+}
