@@ -40,7 +40,8 @@ export default class BlogPage extends React.Component {
           </article>
         </div>
 
-        <CommentBox apiUrl="api/comment/comments.json"/>
+        <CommentBox apiUrl=""/>
+        
       </div>
     )
   }

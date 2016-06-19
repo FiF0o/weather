@@ -22,8 +22,7 @@ import sassLint from 'gulp-sass-lint';
 import responsive from 'gulp-responsive';
 import iconfont from 'gulp-iconfont';
 import iconfontCss from 'gulp-iconfont-css';
-//TODO Fix error thrown in sass pipe
-//import uncss from 'gulp-uncss';
+//import bootstrapSass from 'bootstrap-sass'
 
 /**
  Config paramaters for Gulp
@@ -42,7 +41,7 @@ const images = {
 };
 const styles = {
   in: src + config.sass,
-  watch: [`${src + config.sass.substring(0, (config.sass.lastIndexOf('/') + 1))}**/*`],
+  watch: `${src + config.sass.substring(0, (config.sass.lastIndexOf('/') + 1))}**/*`,
   out: dest + (config.css[config.css.length - 1] === '/' ? config.css : config.css + '/'),
   sassOpt: {
     outputStyle: config.sassOptions.outputStyle || 'compressed',
@@ -70,14 +69,6 @@ const syncOpt = {
   //port: process.env.PORT || 3000
   //logFileChanges: false
 };
-const vendors = {
-  in: src + (config.vendors[config.vendors.length - 1] === '/' ?
- `${config.vendors}**/*` : `${config.vendors}/**/*`),
-  out: dest + (config.vendors[config.vendors.length - 1] === '/' ?
- config.vendors : config.vendors + '/'),
-  watch: [src + (config.vendors[config.vendors.length - 1] === '/' ?
- config.vendors + '**/*' : config.vendors + '/**/*')]
-};
 const fonts = {
   in: src + (config.fonts[config.fonts.length - 1] === '/' ? config.fonts +
  '**/*' : config.fonts + '/**/*'),
@@ -95,9 +86,9 @@ import * as pkg  from './package.json';
 log(`${pkg.name} ${pkg.version} ${config.environment} build`);
 
 gulp.task('debug', [], () => {
-  log(fonts.in)
-  log(fonts.out)
-  
+  //log(bootstrapSass);
+
+
 });
 
 const sync = browserSync.create();
@@ -152,7 +143,6 @@ gulp.task('sass', ['sasslint'], () => {
     .on('error', sass.logError))
     //.pipe(uncss({html:['index.html', '']}))
     .pipe(sourcemaps.write('.'))
-    // .pipe(gulp.dest('public/assets'));
     .pipe(gulp.dest(styles.out));
 });
 
@@ -205,7 +195,7 @@ gulp.task('lint', () => {
 });
 
 // added sass
-gulp.task('serve', ['basics', 'sass', 'transpile', 'image:all'], () => sync.init({ 
+gulp.task('serve', ['basics', 'sass', 'transpile', 'image:all'], () => sync.init({
   server: {
     baseDir: syncOpt.server.baseDir,
     index: syncOpt.server.index
@@ -228,7 +218,7 @@ gulp.task('image', () => {
   // removed svg and png format as it errors
  gulp.src(`${images.in}/**/*.{jpg,jpeg}`)
     .pipe(responsive({
-      
+
      // Resize all JPG images to three different sizes: 200, 500, and 630 pixels
      '*.jpg': [
        {width: 320, rename: { suffix: '-320px' }},
@@ -240,7 +230,7 @@ gulp.task('image', () => {
 
      // // Resize all PNG images to be retina ready
      // '*.png': [
-     //   {width: 120}, 
+     //   {width: 120},
      //   {width: 120 * 2, rename: { suffix: '@2x' }}
      // ],
      //  '*.svg': [
@@ -263,7 +253,7 @@ gulp.task('image', () => {
 gulp.task('image-svg', () => {
   return gulp.src([`${images.in}/**/*.svg`])
     .pipe(gulp.dest(`${images.out}images`))
-  
+
 });
 
 gulp.task('image-icon', () => {

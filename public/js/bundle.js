@@ -34917,14 +34917,6 @@ var _BlogPage = require('./pages/BlogPage');
 
 var _BlogPage2 = _interopRequireDefault(_BlogPage);
 
-var _PicturePage = require('./pages/PicturePage');
-
-var _PicturePage2 = _interopRequireDefault(_PicturePage);
-
-var _VideoPage = require('./pages/VideoPage');
-
-var _VideoPage2 = _interopRequireDefault(_VideoPage);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //on this Route, / component Layout is being rendered
@@ -34934,217 +34926,35 @@ this.props.children (<Route>)are being passed here (nested) when declaring
 this.props.children on the parent class 
 */
 var app = _react2.default.createElement(
-  _reactRouter.Router,
-  { history: _reactRouter.hashHistory },
-  _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/blog' }),
-  _react2.default.createElement(
-    _reactRouter.Route,
-    { path: '/', component: _Layout2.default },
-    _react2.default.createElement(_reactRouter.Route, { path: 'blog', component: _BlogPage2.default }),
-    _react2.default.createElement(_reactRouter.Route, { path: 'picture', component: _PicturePage2.default }),
-    _react2.default.createElement(_reactRouter.Route, { path: 'video', component: _VideoPage2.default })
-  )
+    _reactRouter.Router,
+    { history: _reactRouter.hashHistory },
+    _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/blog' }),
+    _react2.default.createElement(
+        _reactRouter.Route,
+        { path: '/', component: _Layout2.default },
+        _react2.default.createElement(_reactRouter.Route, { path: 'blog', component: _BlogPage2.default })
+    )
 );
+// import Bootstrap from '../vendors/bootstrap-sass/assets/javascripts/bootstrap'
+// console.log(Bootstrap)
+
+//import Bootstrap from 'react-bootstrap';
+
+//console.log(Bootstrap)
+
 
 (0, _jquery2.default)(function () {
-  _reactDom2.default.render(app, document.getElementById('app'), function () {
-    console.timeEnd('react-time');
-  });
+    _reactDom2.default.render(app, document.getElementById('app'), function () {
+        console.timeEnd('react-time');
+    });
 });
 
-},{"./layout/Layout":236,"./pages/BlogPage":237,"./pages/PicturePage":238,"./pages/VideoPage":239,"jquery":48,"react":227,"react-dom":52,"react-router":82}],231:[function(require,module,exports){
+},{"./layout/Layout":232,"./pages/BlogPage":233,"jquery":48,"react":227,"react-dom":52,"react-router":82}],231:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _CommentConfirmation = require('./CommentConfirmation');
-
-var _CommentConfirmation2 = _interopRequireDefault(_CommentConfirmation);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by jonlazarini on 12/06/16.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-var Comment = function (_React$Component) {
-  _inherits(Comment, _React$Component);
-
-  function Comment() {
-    _classCallCheck(this, Comment);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Comment).call(this));
-
-    _this.state = {
-      isAbusive: false
-    };
-    _this._handleDelete = _this._handleDelete.bind(_this);
-    _this._toggleAbuse = _this._toggleAbuse.bind(_this);
-    return _this;
-  }
-
-  _createClass(Comment, [{
-    key: 'render',
-    value: function render() {
-
-      var commentBody = void 0;
-
-      if (!this.state.isAbusive) {
-        commentBody = this.props.body;
-      } else {
-        commentBody = _react2.default.createElement(
-          'em',
-          null,
-          'Content marked as abusive'
-        );
-      }
-
-      return _react2.default.createElement(
-        'div',
-        { className: 'comment' },
-        _react2.default.createElement('img', { src: this.props.avatarUrl, alt: this.props.author + '\'s picture' }),
-        _react2.default.createElement(
-          'p',
-          { className: 'comment-header' },
-          this.props.author
-        ),
-        _react2.default.createElement(
-          'p',
-          { className: 'comment-body' },
-          commentBody
-        ),
-        '//TODO Fix toggle abuse to have Yes No text displayed and pop up onDelete',
-        _react2.default.createElement(
-          'div',
-          { className: 'comment-actions' },
-          _react2.default.createElement(_CommentConfirmation2.default, { onDelete: this._handleDelete }),
-          _react2.default.createElement(
-            'a',
-            { href: '#', onClick: this._toggleAbuse },
-            'Report as Abuse'
-          )
-        )
-      );
-    }
-  }, {
-    key: '_toggleAbuse',
-    value: function _toggleAbuse(event) {
-      event.preventDefault();
-
-      this.setState({
-        isAbusive: !this.state.isAbusive
-      });
-    }
-  }, {
-    key: '_handleDelete',
-    value: function _handleDelete() {
-      //event.preventDefault();
-      //calls pop-up to confirm delete
-      //TODO Move to report as abuse button
-      if (confirm('Are you sure?')) {
-        //passing down function form parent to comment by calling the onDelete prop
-        //assigning the comment from the parent as parameter of the function to
-        // the child component
-        this.props.onDelete(this.props.comment);
-        //this.props.onDelete(this.props.id);
-      }
-    }
-  }]);
-
-  return Comment;
-}(_react2.default.Component);
-
-exports.default = Comment;
-
-},{"./CommentConfirmation":234,"react":227}],232:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require("react");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by jonlazarini on 12/06/16.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-var CommentAvatarList = function (_React$Component) {
-  _inherits(CommentAvatarList, _React$Component);
-
-  function CommentAvatarList() {
-    _classCallCheck(this, CommentAvatarList);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(CommentAvatarList).apply(this, arguments));
-  }
-
-  _createClass(CommentAvatarList, [{
-    key: "render",
-    value: function render() {
-      var _props$avatars = this.props.avatars;
-      var avatars = _props$avatars === undefined ? [] : _props$avatars;
-
-
-      return _react2.default.createElement(
-        "div",
-        { className: "comment-avatars" },
-        _react2.default.createElement(
-          "h4",
-          null,
-          "Authors"
-        ),
-        _react2.default.createElement(
-          "ul",
-          null,
-          avatars.map(function (avatarUrl, i) {
-            return _react2.default.createElement(
-              "li",
-              { key: i },
-              _react2.default.createElement("img", { src: avatarUrl })
-            );
-          })
-        )
-      );
-    }
-  }]);
-
-  return CommentAvatarList;
-}(_react2.default.Component);
-
-exports.default = CommentAvatarList;
-
-},{"react":227}],233:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -35156,21 +34966,7 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _CommentForm = require('./CommentForm');
-
-var _CommentForm2 = _interopRequireDefault(_CommentForm);
-
-var _CommentAvatarList = require('./CommentAvatarList');
-
-var _CommentAvatarList2 = _interopRequireDefault(_CommentAvatarList);
-
-var _Comment = require('./Comment');
-
-var _Comment2 = _interopRequireDefault(_Comment);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -35182,492 +34978,108 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 var CommentBox = function (_React$Component) {
-    _inherits(CommentBox, _React$Component);
+  _inherits(CommentBox, _React$Component);
 
-    function CommentBox() {
-        _classCallCheck(this, CommentBox);
+  function CommentBox() {
+    _classCallCheck(this, CommentBox);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentBox).call(this));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentBox).call(this));
 
-        _this.state = {
-            showComments: false,
-            // will be use to store the array of comment from the API
-            comments: []
-        };
+    _this.state = {};
 
-        /*
-        pre-bind method to class scope which is CommentBox and can be
-        passed around without having to use .bind(this) at prop level in
-        the component below onDelete={}
-        bind(this) binds the context to the instance of the class rather
-        than the class itself...
-        */
-        _this._deleteComment = _this._deleteComment.bind(_this);
-        _this._addComment = _this._addComment.bind(_this);
-        _this._toggleComments = _this._toggleComments.bind(_this);
-        return _this;
-    }
     /*
-     lifecycle method is used as fetchComments calls render and it will be
-     an infinite loop...
+    pre-bind method to class scope which is CommentBox and can be
+    passed around without having to use .bind(this) at prop level in
+    the component below onDelete={}
+    bind(this) binds the context to the instance of the class rather
+    than the class itself...
+    */
+
+    return _this;
+  }
+  /*
+   lifecycle method is used as fetchComments calls render and it will be
+   an infinite loop...
+    */
+
+  _createClass(CommentBox, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {}
+    /*
+     Start polling process for AJAX request here and rerenders components
+     every 5 secs
+     Memory leak as the timer is created (setInterval()) everytime the page is
+     rendered on
+      he page
+     */
+
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+
+    //destroys timer when about to be remove removed - no more memory leak
+
+  }, {
+    key: 'componentWillUnmout',
+    value: function componentWillUnmout() {}
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        'toto'
+      );
+    }
+
+    /**
+     * server side
+    */
+
+    /*
+    * optimistic update
+    * 1- create new array by copying elements of the state - clone array
+    * 2- find Index of the comment to be deleted in the array
+    * 3- delete at 1 comment at the position index
+    * */
+
+    /*
+    Method is passed down, propagated to the child componentCommentForm as we can pass function as argument - functions are
+    first class citizen - onComment is a prop at the parent component
+    level that will be passed down/called in the child component
+    */
+
+    /*
+     Instead of push() which doesnt return the new array but only mutate
+      it, we can also use concat()in the method
+      setState({
+        comments: this.state.concat([comment])
+      })
+     
       */
 
-    _createClass(CommentBox, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this._fetchComments();
-        }
-        /*
-         Start polling process for AJAX request here and rerenders components
-         every 5 secs
-         Memory leak as the timer is created (setInterval()) everytime the page is
-         rendered on
-          he page
-         */
+    /**
+     *  ADD COMMENT GENERATED ON SERVER SIDE (above is client side)
+     * One way control flow example
+     *
+     *
+     *  const comment= { author, body };
+     *
+     *  JQuery.post('/api/comments', { comment })
+     *    .success(newComment => {
+     *        this.setState({comments:
+      *        this.state.comments.concat([newComment])});
+     *    });
+     */
 
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            var _this2 = this;
+  }]);
 
-            this._timer = setInterval(function () {
-                return _this2._fetchComments();
-            }, 5000);
-        }
-
-        //destroys timer when about to be remove removed - no more memory leak
-
-    }, {
-        key: 'componentWillUnmout',
-        value: function componentWillUnmout() {
-            clearInterval(this_.timer);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var comments = this._getComments();
-            return _react2.default.createElement(
-                'div',
-                { className: 'row comments-container' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'cell' },
-                    _react2.default.createElement(
-                        'h2',
-                        null,
-                        'Join The Discussion'
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'comment-box' },
-                        _react2.default.createElement(_CommentForm2.default, { addComment: this._addComment }),
-                        _react2.default.createElement(_CommentAvatarList2.default, { avatars: this._getAvatars() }),
-                        this._getPopularMessage(comments.length),
-                        _react2.default.createElement(
-                            'h3',
-                            { className: 'comment-count' },
-                            this._getCommentsTitle(comments.length)
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'comment-list' },
-                            _react2.default.createElement(
-                                'button',
-                                { className: 'button-secondary', onClick: this._toggleComments },
-                                this.state.showComments ? "Hide" + " comment" : "Show comment"
-                            ),
-                            this.state.showComments ? _react2.default.createElement(
-                                'div',
-                                { className: 'comment-list' },
-                                comments
-                            ) : null
-                        )
-                    )
-                )
-            );
-        }
-        //TODO bind(this) at the constructor level to increase perf and not rely
-        // on garbage collector to destroy objects when not used
-
-    }, {
-        key: '_toggleComments',
-        value: function _toggleComments(e) {
-
-            this.setState({ showComments: !this.state.showComments });
-            e.preventDefault();
-        }
-    }, {
-        key: '_getAvatars',
-        value: function _getAvatars() {
-            return this.state.comments.map(function (comment) {
-                return comment.avatarUrl;
-            });
-        }
-    }, {
-        key: '_getPopularMessage',
-        value: function _getPopularMessage(commentCount) {
-            var POPULAR_COUNT = 10;
-            if (commentCount > POPULAR_COUNT) {
-                return _react2.default.createElement(
-                    'div',
-                    null,
-                    'This post is getting really popular, don\'t miss out!'
-                );
-            }
-        }
-    }, {
-        key: '_getComments',
-        value: function _getComments() {
-            var _this3 = this;
-
-            return this.state.comments.map(function (comment) {
-                /* spread operator to return comment.id, comment.author,
-                 comment.body, comment.avatarUrl etc..
-                 all comment properties */
-                return _react2.default.createElement(_Comment2.default, _extends({}, comment, {
-                    onDelete: _this3._deleteComment,
-                    key: comment.id
-                }));
-                // onDelete - declare this._deleteComment in constructor
-            });
-        }
-        /**
-         * server side
-        */
-
-    }, {
-        key: '_deleteComment',
-        value: function _deleteComment() {
-            _jquery2.default.ajax({
-                method: 'DELETE',
-                url: '/api/comments/' + comment.id
-            });
-            /*
-            * optimistic update
-            * 1- create new array by copying elements of the state - clone array
-            * 2- find Index of the comment to be deleted in the array
-            * 3- delete at 1 comment at the position index
-            * */
-            var comments = [].concat(_toConsumableArray(this.state.comments));
-            var commentIndex = comments.indexOf(comment);
-            comments.splice(commentIndex, 1);
-            this.setState({ comments: comments });
-        }
-    }, {
-        key: '_getCommentsTitle',
-        value: function _getCommentsTitle(commentCount) {
-            if (commentCount === 0) {
-                return 'No comments yet';
-            } else if (commentCount === 1) {
-                return '1 comment';
-            } else {
-                return commentCount + ' comments';
-            }
-        }
-    }, {
-        key: '_addComment',
-        value: function _addComment(commentAuthor, commentBody) {
-            /*
-            Method is passed down, propagated to the child componentCommentForm as we can pass function as argument - functions are
-            first class citizen - onComment is a prop at the parent component
-            level that will be passed down/called in the child component
-            */
-            var comment = {
-                id: this.state.comments.length + 1,
-                author: commentAuthor,
-                body: commentBody,
-                avatarUrl: 'assets/images/avatars/avatar-default.png'
-            };
-            /*
-             Instead of push() which doesnt return the new array but only mutate
-              it, we can also use concat()in the method
-              setState({
-                comments: this.state.concat([comment])
-              })
-             
-              */
-            this.state.comments.push(comment);
-            var comments = this.state.comments;
-            this.setState({
-                // Use concat instead of push as concat returns a reference to
-                // the array instead of mutating the array
-                comments: comments
-            });
-
-            /**
-             *  ADD COMMENT GENERATED ON SERVER SIDE (above is client side)
-             * One way control flow example
-             *
-             *
-             *  const comment= { author, body };
-             *
-             *  JQuery.post('/api/comments', { comment })
-             *    .success(newComment => {
-             *        this.setState({comments:
-              *        this.state.comments.concat([newComment])});
-             *    });
-             */
-        }
-    }, {
-        key: '_fetchComments',
-        value: function _fetchComments() {
-            var _this4 = this;
-
-            _jquery2.default.ajax({
-                method: 'GET',
-                //TODO Change final js file bundle.js to be dist at root level ./public
-                //url: 'api/comment/comments.json',
-
-                // Receives apiUrl prop from parent component: PicturePage,
-                // BlogPage, etc..
-                url: this.props.apiUrl,
-                success: function success(comments) {
-                    _this4.setState({ comments: comments });
-                }
-            });
-        }
-    }, {
-        key: '_deleteComment',
-        value: function _deleteComment(commentID) {
-            var comments = this.state.comments.filter(function (comment) {
-                return comment.id !== commentID;
-            });
-            // NTM
-            this.setState({ comments: comments });
-        }
-    }]);
-
-    return CommentBox;
+  return CommentBox;
 }(_react2.default.Component);
 
 exports.default = CommentBox;
 
-
-CommentBox.propTypes = {
-    // will define a prop as being mandatory to work
-    // data is propagated from the CommentBox (parent) to the CommentForm
-    // (child)
-    apiUrl: _react2.default.PropTypes.string.isRequired
-};
-
-},{"./Comment":231,"./CommentAvatarList":232,"./CommentForm":235,"jquery":48,"react":227}],234:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require("react");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by jonlazarini on 12/06/16.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-var CommentConfirmation = function (_React$Component) {
-  _inherits(CommentConfirmation, _React$Component);
-
-  function CommentConfirmation() {
-    _classCallCheck(this, CommentConfirmation);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentConfirmation).call(this));
-
-    _this.state = {
-      showConfirm: false
-    };
-    _this._confirmDelete = _this._confirmDelete.bind(_this);
-    _this._toggleConfirmMessage = _this._toggleConfirmMessage.bind(_this);
-    return _this;
-  }
-
-  _createClass(CommentConfirmation, [{
-    key: "render",
-    value: function render() {
-
-      var confirmNode = void 0;
-
-      if (this.state.showConfirm) {
-        return _react2.default.createElement(
-          "span",
-          null,
-          _react2.default.createElement(
-            "a",
-            { href: "", onClick: this._confirmDelete },
-            "Yes "
-          ),
-          " - or - ",
-          _react2.default.createElement(
-            "a",
-            { href: "", onClick: this._toggleConfirmMessage.bind(this) },
-            " No"
-          )
-        );
-      } else {
-        confirmNode = _react2.default.createElement(
-          "a",
-          { href: "", onClick: this._toggleConfirmMessage },
-          "Delete comment?"
-        );
-      }
-
-      return _react2.default.createElement(
-        "span",
-        null,
-        confirmNode
-      );
-    }
-  }, {
-    key: "_toggleConfirmMessage",
-    value: function _toggleConfirmMessage(e) {
-      e.preventDefault();
-
-      this.setState({
-        showConfirm: !this.state.showConfirm
-      });
-    }
-  }, {
-    key: "_confirmDelete",
-    value: function _confirmDelete(e) {
-      e.preventDefault();
-      this.props.onDelete();
-    }
-  }]);
-
-  return CommentConfirmation;
-}(_react2.default.Component);
-
-exports.default = CommentConfirmation;
-
-},{"react":227}],235:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require("react");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by jonlazarini on 12/06/16.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-var CommentForm = function (_React$Component) {
-    _inherits(CommentForm, _React$Component);
-
-    function CommentForm() {
-        _classCallCheck(this, CommentForm);
-
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentForm).call(this));
-
-        _this.state = {
-            characters: 0
-        };
-        _this._handleSubmit = _this._handleSubmit.bind(_this);
-        _this._getCharacterCount = _this._getCharacterCount.bind(_this);
-        return _this;
-    }
-
-    _createClass(CommentForm, [{
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            return(
-                /*
-                -> use ref for the onSubmit method to access inputs/fields
-                 reference the component in the class from anywhere after it s
-                 been rendered
-                 this will create a new class property named _body
-                 -> renders function will trigger the function on the ref
-                  onSubmit, onClick are (native) synthetic events which are mapping
-                  all the webs browser events, give consistency so that wen
-                   browsers have the same behaviours
-                */
-                _react2.default.createElement(
-                    "form",
-                    { className: "comment-form", onSubmit: this._handleSubmit },
-                    _react2.default.createElement(
-                        "label",
-                        null,
-                        "New comment"
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "comment-form-fields" },
-                        _react2.default.createElement("input", { placeholder: "Name:", ref: function ref(input) {
-                                return _this2._author = input;
-                            } }),
-                        _react2.default.createElement("textarea", { placeholder: "Comment:", ref: function ref(textarea) {
-                                return _this2._body = textarea;
-                            }, onChange: this._getCharacterCount })
-                    ),
-                    _react2.default.createElement(
-                        "p",
-                        null,
-                        this.state.characters,
-                        " characters"
-                    ),
-                    _react2.default.createElement(
-                        "div",
-                        { className: "comment-form-actions" },
-                        _react2.default.createElement(
-                            "button",
-                            { type: "submit" },
-                            "Post comment"
-                        )
-                    )
-                )
-            );
-        }
-    }, {
-        key: "_getCharacterCount",
-        value: function _getCharacterCount() {
-
-            this.setState({
-                characters: this._body.value.length
-            });
-        }
-    }, {
-        key: "_handleSubmit",
-        value: function _handleSubmit(event) {
-            event.preventDefault();
-            // pass addComment() method from parent component which is CommentBox
-            this.props.addComment(this._author.value, this._body.value);
-
-            this._author.value = '';
-            this._body.value = '';
-
-            this.setState({ characters: 0 });
-        }
-    }]);
-
-    return CommentForm;
-}(_react2.default.Component);
-
-exports.default = CommentForm;
-
-},{"react":227}],236:[function(require,module,exports){
+},{"jquery":48,"react":227}],232:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35755,7 +35167,7 @@ var Layout = function (_React$Component) {
 
 exports.default = Layout;
 
-},{"react":227,"react-router":82}],237:[function(require,module,exports){
+},{"react":227,"react-router":82}],233:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35830,7 +35242,7 @@ var BlogPage = function (_React$Component) {
             )
           )
         ),
-        _react2.default.createElement(_CommentBox2.default, { apiUrl: 'api/comment/comments.json' })
+        _react2.default.createElement(_CommentBox2.default, { apiUrl: '' })
       );
     }
   }]);
@@ -35848,170 +35260,5 @@ component CommentBox using this.props.apiUrl - _fetchComments() method
 
 exports.default = BlogPage;
 
-},{"../components/CommentBox":233,"react":227}],238:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _CommentBox = require('../components/CommentBox');
-
-var _CommentBox2 = _interopRequireDefault(_CommentBox);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by jonlazarini on 13/06/16.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-var PicturePage = function (_React$Component) {
-  _inherits(PicturePage, _React$Component);
-
-  function PicturePage() {
-    _classCallCheck(this, PicturePage);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(PicturePage).apply(this, arguments));
-  }
-
-  _createClass(PicturePage, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: 'cell' },
-          _react2.default.createElement(
-            'article',
-            { className: 'article article--video' },
-            _react2.default.createElement(
-              'div',
-              { className: 'article--video-author' },
-              'Picture by ',
-              _react2.default.createElement(
-                'strong',
-                null,
-                '@adaptive path'
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'article--video-img' },
-              _react2.default.createElement('img', { src: 'assets/images/adaptive-paths-guide-to-experience-mapping-1320px.jpg', alt: '' })
-            )
-          )
-        ),
-        _react2.default.createElement(_CommentBox2.default, { apiUrl: 'api/comment/comments.json' })
-      );
-    }
-  }]);
-
-  return PicturePage;
-}(_react2.default.Component);
-
-/*
-      declare a prop apiUrl for the CommentBox of the BlogPage
-     (parent) so that it can be passed down to CommentBox comp.
-
-     url will be passed a parameter to the AJAX Call in the children
-      component CommentBox using this.props.apiUrl - _fetchComments() method
-*/
-
-
-exports.default = PicturePage;
-
-},{"../components/CommentBox":233,"react":227}],239:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _CommentBox = require('../components/CommentBox');
-
-var _CommentBox2 = _interopRequireDefault(_CommentBox);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by jonlazarini on 13/06/16.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-var VideoPage = function (_React$Component) {
-  _inherits(VideoPage, _React$Component);
-
-  function VideoPage() {
-    _classCallCheck(this, VideoPage);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(VideoPage).apply(this, arguments));
-  }
-
-  _createClass(VideoPage, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: 'cell' },
-          _react2.default.createElement(
-            'div',
-            { className: 'article--video-author' },
-            'Picture by ',
-            _react2.default.createElement(
-              'strong',
-              null,
-              '@video-page'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'video-wrapper' },
-            _react2.default.createElement('iframe', { width: '630', height: '315', src: 'https://www.youtube.com/embed/Ovj4hFxko7c', frameborder: '0', allowfullscreen: true })
-          )
-        ),
-        _react2.default.createElement(_CommentBox2.default, { apiUrl: 'api/comment/comments.json' })
-      );
-    }
-  }]);
-
-  return VideoPage;
-}(_react2.default.Component);
-/*
-  declare a prop apiUrl for the CommentBox of the BlogPage
- (parent) so that it can be passed down to CommentBox comp.
-
- url will be passed a parameter to the AJAX Call in the children
-  component CommentBox using this.props.apiUrl - _fetchComments() method
-*/
-
-
-exports.default = VideoPage;
-
-},{"../components/CommentBox":233,"react":227}]},{},[230])
+},{"../components/CommentBox":231,"react":227}]},{},[230])
 //# sourceMappingURL=bundle.js.map

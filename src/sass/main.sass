@@ -1,4 +1,16 @@
-@import 'legacy'
+// @import "bootstrap-sprockets"
+// @import "bootstrap"
+
+@import '../vendors/bootstrap-sass/assets/stylesheets/bootstrap-sprockets'
+@import '../vendors/bootstrap-sass/assets/stylesheets/bootstrap'
+
+.container
+  background-color: red
+  color: blue
+  .row
+    background-color: blue
+    color: red
+
 
 .video-wrapper
   float: none
@@ -52,3 +64,6 @@ button
       color: #6ba2aa
       background: #fce87c
       border: 2px solid #fce87c
+
+
+@import 'font-icon'
