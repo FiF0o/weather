@@ -1,0 +1,65 @@
+// ************************** DO NOT EDIT  ************************** //
+// Mixins to create/generate font file containing the icons tobe used
+// ************************** DO NOT EDIT  ************************** //
+
+// Import your svg to be converted into css font @font-face in the folder source/assets/fonts/
+
+//font is available in build/assets/fonts
+// scss file is available in source/1-tools/_font.scss
+// After the Gulp task, the new font icon file _icon.scss will be compiled into 5-custom
+// font-face will be prefixed by icon-
+// to use an icon use the classname prefixed by icon- e.g. .icon-myfonticon
+
+
+//TODO rename file and script to fonticon
+
+@font-face {
+  font-family: "<%= fontName %>";
+  src: url('<%= fontPath %><%= fontName %>.eot');
+  src: url('<%= fontPath %><%= fontName %>.eot?#iefix') format('eot'),
+  url('<%= fontPath %><%= fontName %>.woff') format('woff'),
+  url('<%= fontPath %><%= fontName %>.ttf') format('truetype'),
+  url('<%= fontPath %><%= fontName %>.svg#<%= fontName %>') format('svg');
+}
+
+@mixin <%= cssClass%>-styles {
+  font-family: "<%= fontName %>";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  // speak: none; // only necessary if not using the private unicode range (firstGlyph option)
+  text-decoration: none;
+  text-transform: none;
+}
+
+%<%= cssClass%> {
+  @include <%= cssClass%>-styles;
+}
+
+@function <%= cssClass%>-char($filename) {
+  $char: "";
+<% _.each(glyphs, function(glyph) { %>
+  @if $filename == <%= glyph.fileName %> {
+  $char: "\<%= glyph.codePoint %>";
+}<% }); %>
+
+@return $char;
+}
+
+@mixin <%= cssClass%>($filename, $insert: before, $extend: true) {
+&:#{$insert} {
+  @if $extend {
+    @extend %<%= cssClass%>;
+  } @else {
+    @include <%= cssClass%>-styles;
+  }
+  content: <%= cssClass%>-char($filename);
+}
+}
+
+<% _.each(glyphs, function(glyph) { %>.<%= cssClass%>-<%= glyph.fileName %> {
+  @include <%= cssClass%>(<%= glyph.fileName %>);
+}
+<% }); %>

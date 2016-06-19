@@ -3,6 +3,8 @@
 //TODO Add task for images
 
 import gulp from 'gulp';
+import del from 'del';
+import htmlMin from 'gulp-htmlmin';
 import browserify from 'browserify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
@@ -17,6 +19,7 @@ import sass from 'gulp-sass';
 import sourcemaps from 'gulp-sourcemaps';
 import plumber from 'gulp-plumber';
 import sassLint from 'gulp-sass-lint';
+
 //import uncss from 'gulp-uncss';
 
 /**
@@ -49,8 +52,11 @@ const styles = {
 };
 
 const js = {
-    in: src + (config.jsDir[config.jsDir.length - 1] === '/' ? config.jsDir + '**/*' : config.jsDir + '/**/*'),
+    // in: src + (config.jsDir[config.jsDir.length - 1] === '/' ? config.jsDir + '**/*' : config.jsDir + '/**/*'),
+    in: src + (config.jsDir[config.jsDir.length - 1] === '/' ? config.jsDir : config.jsDir + '/'),
     out: dest + config.jsDir,
+    //watch: [`${src + config.js.substring(0, (config.js.lastIndexOf('/') +
+  // 1))}**/*`],
     filename: config.jsName
   };
 
@@ -93,28 +99,14 @@ import * as pkg  from './package.json';
 log(`${pkg.name} ${pkg.version} ${config.environment} build`);
 
 gulp.task('debug', [], () => {
-  // log(src)
-  // log(`devBuild\n${devBuild}\n\n`)
-  // log('dest\n'+dest+'\n\n')
-  // log('assets\n'+assets+'\n\n')
-  // log('images.in\n'+images.in+'\n\n')
-  // log('images.out\n'+images.out+'\n\n')
-  log('styles.in\n'+styles.in+'\n\n')
-  log('styles.out\n'+styles.out+'\n\n')
-  //log('styles.watch\n'+styles.watch+'\n\n')
-  //log(`${styles.watch}.s+(a|c)ss`)
-  //log('config.sassOptions\n' + styles.sassOpt.imagePath + '\n\n')
-  // log('styles.sassOpt\n'+styles.sassOpt+'\n\n')
-  // log('syncOpt\n'+syncOpt+'\n\n')
-  // log('js.in\n'+js.in+'\n\n')
-  // log('js.out\n'+js.out+'\n\n')
-  // //log('js.filename\n'+js.filename+'\n\n')
-  // log('vendors.in\n'+vendors.in+'\n\n')
-  // log('vendors.out\n'+vendors.out+'\n\n')
-  // log('vendors.watch\n'+vendors.watch+'\n\n')
-  // log('fonts.in\n'+fonts.in+'\n\n')
-  // log('fonts.out\n'+fonts.out+'\n\n')
-  // log('fonts.watch\n'+fonts.watch+'\n\n')
+  log(images.in)
+  log(images.out)
+  log('vendors.in\n'+vendors.in+'\n\n')
+  log('vendors.out\n'+vendors.out+'\n\n')
+  log('vendors.watch\n'+vendors.watch+'\n\n')
+  log('fonts.in\n'+fonts.in+'\n\n')
+  log('fonts.out\n'+fonts.out+'\n\n')
+  log('fonts.watch\n'+fonts.watch+'\n\n')
 });
 
 const sync = browserSync.create();
@@ -130,6 +122,26 @@ function log(msg) {
 /**
  * Gulp tasks
  */
+gulp.task('html', () => {
+  if (!devBuild) {
+   return gulp.src([`${src}index.html`])
+      .pipe(htmlMin({collapseWhitespace: true}))
+      .pipe(gulp.dest(dest))
+  } else {
+   return gulp.src([`${src}index.html`], { base: 'src/' })
+    .pipe(gulp.dest(dest))
+  }
+  });
+
+gulp.task('html-watch', ['html'], () => sync.reload());
+
+
+gulp.task('api', () => {
+  return gulp.src([`${src}/api/**`])
+    .pipe(gulp.dest(`${dest}api/`))
+});
+
+ gulp.task('basics', ['html', 'api']);
 
 gulp.task('sass', ['sasslint'], () => {
   // return gulp.src('src/sass/main.sass')
@@ -168,7 +180,7 @@ gulp.task('sasslint', () => {
 
 // Input file.
 watchify.args.debug = true;
-var bundler = browserify('src/js/app.js', watchify.args);
+var bundler = browserify(js.in + js.filename, watchify.args);
 
 // Babel transform
 bundler.transform(babelify.configure({
@@ -184,15 +196,16 @@ function bundle() {
       console.error( '\nError: ', error.message, '\n');
       this.emit('end');
     })
+    //TODO Refactor ith config param
     .pipe(exorcist('public/assets/js/bundle.js.map'))
     .pipe(source('bundle.js'))
     .pipe(buffer())
     .pipe(ifElse(process.env.NODE_ENV === 'production', uglify))
-    .pipe(gulp.dest('public/assets/js'));
+    .pipe(gulp.dest(js.out));
 }
 
 //add Sass task here
-gulp.task('default', ['transpile, sass']);
+gulp.task('default', ['transpile', 'basics', 'sass']);
 
 // add sass task that sass() but sasslint before
 gulp.task('transpile', ['lint'], () => bundle());
@@ -204,7 +217,7 @@ gulp.task('lint', () => {
 });
 
 // added sass
-gulp.task('serve', ['transpile', 'sass'], () => sync.init({ 
+gulp.task('serve', ['basics', 'sass', 'transpile'], () => sync.init({ 
   server: {
     baseDir: syncOpt.server.baseDir,
     index: syncOpt.server.index
@@ -215,12 +228,12 @@ gulp.task('js-watch', ['transpile'], () => sync.reload());
 gulp.task('sass-watch', ['sass'], () => sync.reload());
 
 gulp.task('watch', ['serve'], () => {
-  gulp.watch('src/**/*', ['js-watch']);
-  gulp.watch('src/sass/**/*.sass', ['sass-watch']);
+  gulp.watch(`${src}/**/*.js`, ['js-watch']);
+  gulp.watch(`${styles.watch}.sass`, ['sass-watch']);
   //gulp.watch('public/assets/style.css', sync.reload)
-  gulp.watch('src/sass/**/*.sass', sync.reload);
+  gulp.watch(`${styles.watch}.sass`, sync.reload);
   // add task for sass watch here
-  gulp.watch('public/index.html', sync.reload);
+  gulp.watch(`${dest}/index.html`, sync.reload);
 });
 
 //import iconfont from 'gulp-iconfont';
@@ -347,13 +360,13 @@ gulp.task('image', () => {
 ////Update images on build folder
 //gulp.task('build:images',['image','icons']);
 
+//TODO Refactor in the gulp image task
 //gulp.task('icons', () => {
-//// Creates RWD images and gets icons from source directory
+//// Creates icons from source directory
 //  return gulp.src([`${images.in}/icons/**`],
 //        {base: 'source/assets'})
 //               .pipe($.newer(images.out))
 //               .pipe(gulp.dest(images.out));
-//    log('-> icons done! <-');
 //});
 
 
@@ -373,6 +386,7 @@ gulp.task('image', () => {
 //        .pipe(iconfontCss({
 //            fontName,
 //            path: 'source/sass/1-tools/_fonticon.scss',
+//            // after Mixin has been executed
 //            targetPath: '../../../source/sass/5-custom/_fonticon.scss/',
 //            fontPath: '../../assets/fonts/'
 //        }))
@@ -385,7 +399,6 @@ gulp.task('image', () => {
 //            timestamp: runTimestamp// recommended opt
 //        }))
 //        .pipe(gulp.dest(fonts.out));
-//    log('--> Iconfont D0ne!<--');
 //});
 
 
@@ -406,6 +419,8 @@ gulp.task('clean', () => {
 
 //TODO Update Help section with new tasks
 gulp.task('help', () => {
+    console.log('');
+    log(`${pkg.name} ${pkg.version} ${config.environment} build`);
     console.log('');
     console.log('======================== Help  ========================');
     console.log('');
