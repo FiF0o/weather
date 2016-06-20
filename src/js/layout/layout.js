@@ -14,12 +14,6 @@ export default class Layout extends React.Component {
             <li>
               <Link to="/blog">Blog</Link>
             </li>
-            <li>
-              <Link to="/picture">Picture</Link>
-            </li>
-            <li>
-              <Link to="/video">Video</Link>
-            </li>
           </ul>
         </div>
 

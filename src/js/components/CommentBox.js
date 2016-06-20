@@ -49,7 +49,7 @@ export default class CommentBox extends React.Component {
 
     render() {
         return (
-          <div>toto</div>
+          <div>Comment box here</div>
         );
     }
     
