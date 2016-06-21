@@ -5,15 +5,14 @@ export default class Item extends React.Component {
       super();
 
       this.state = {
-
-      }
+      };
   }
   render() {
 
     return(
       <div className="item">
-        <p>title: {this.props.title}</p>
-        <p>body: {this.props.body}/</p>
+        <p>dt_txt: {this.props.dt_txt}</p>
+    
       </div>
     );
   }

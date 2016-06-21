@@ -1,8 +1,8 @@
 /**
  * Created by jonlazarini on 13/06/16.
  */
-import React from 'react'
-import CommentBox from '../components/CommentBox'
+import React from 'react';
+import Box from '../components/Box';
 
 export default class BlogPage extends React.Component {
   render() {
@@ -40,8 +40,8 @@ export default class BlogPage extends React.Component {
           </article>
         </div>
 
-        <CommentBox apiUrl=""/>
-        
+        <Box />
+
       </div>
     )
   }
