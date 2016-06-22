@@ -1,7 +1,8 @@
 import React from 'react';
 import jQuery from 'jquery';
 import WeatherList from './WeatherList';
-import CurrentDay from './CurrentDay'
+import CurrentDay from './CurrentDay';
+import toWeekDay from '../utils/WeekDay';
 
 
 export default class WeatherHeader extends React.Component  {
@@ -10,6 +11,7 @@ export default class WeatherHeader extends React.Component  {
     super();
 
     this.state = {
+      weekDay: "string",
       dataWeather: {
         city: {
           id: 12345,
@@ -39,8 +41,9 @@ export default class WeatherHeader extends React.Component  {
         }]
       }
     };
-    // this._fetchWeather = _fetchWeather.bind(this);
+
   }
+
 
   componentWillMount() {
     //add polling for everyday
@@ -50,38 +53,51 @@ export default class WeatherHeader extends React.Component  {
   render() {
     const weatherList = this._getWeatherList();
     const weatherCurrent = this._getCurrentWeather();
+    console.log(this.props);
     return(
       <div>
+        <p>{toWeekDay()}</p>
         <div>{weatherCurrent}</div>
         <div>{weatherList}</div>
-        
       </div>
     );
   }
-  //TODO Add the right props to be passed down WeatherList
+
+
+//TODO Add the right props to be passed down WeatherList
+  
   _getWeatherList() {
-    return this.state.dataWeather.list.map((weather) => (
-      <WeatherList
+    return this.state.dataWeather.list.map((weather) => {
+      return (
+        <WeatherList
+          temp={weather.temp.day}
+          description={weather.weather[0].description}
           key={weather.dt}
-          dt_txt={weather.dt_txt}
-      />
-    ));
+        />)
+    });
   }
 
   //{this.state.dataWeather.list.length > 0 ? this.state.dataWeather.list[0].city.name : null}
   _getCurrentWeather() {
+    const current = this.state.dataWeather.list[0];
     return (
-    <CurrentDay
-      temp={this.state.dataWeather.list[0].temp.day}
-      description={this.state.dataWeather.list[0].weather[0].description}
-    />
+      <CurrentDay
+        date={new Date(current.dt * 1000)}
+        temp={current.temp.day}
+        description={current.weather[0].description}
+      />
     );
   }
 
+  
   _fetchWeather() {
+    const apiID = '672aa588c2a9ed1c903cd291e545dcac';
+    const forecastUrl = 'http://api.openweathermap.org/data/2.5/forecast/daily';
+    const location = 'London';
+    //TODO Create object to store the query to be passed
     jQuery.ajax({
       method:'GET',
-      url: 'http://api.openweathermap.org/data/2.5/forecast/daily?id=524901&APPID=672aa588c2a9ed1c903cd291e545dcac',
+      url: `${forecastUrl}?q=${location}&APPID=${apiID}`,
       //context: '',
       success: (dataWeather) => {
         this.setState({dataWeather})
@@ -92,10 +108,3 @@ export default class WeatherHeader extends React.Component  {
     })
   }
 }
-
-// http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=672aa588c2a9ed1c903cd291e545dcac
-// http://api.openweathermap.org/data/2.5/forcast?qLondon&APPID=672aa588c2a9ed1c903cd291e545dcac
-
-// &APPID=
-// const apiKey = "672aa588c2a9ed1c903cd291e545dcac"
-// q=London

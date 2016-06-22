@@ -22,7 +22,6 @@ import sassLint from 'gulp-sass-lint';
 import responsive from 'gulp-responsive';
 import iconfont from 'gulp-iconfont';
 import iconfontCss from 'gulp-iconfont-css';
-//import bootstrapSass from 'bootstrap-sass'
 
 /**
  Config paramaters for Gulp
@@ -87,19 +86,15 @@ log(`${pkg.name} ${pkg.version} ${config.environment} build`);
 
 gulp.task('debug', [], () => {
   //log(bootstrapSass);
-
-
 });
 
 const sync = browserSync.create();
 /**
  * Custom functions
  */
-
 function log(msg) {
   console.log(msg);
 }
-
 /**
  * Gulp tasks
  */
@@ -116,7 +111,6 @@ gulp.task('html', () => {
 
 gulp.task('html-watch', ['html'], () => sync.reload());
 
-
 gulp.task('api', () => {
   return gulp.src([`${src}/api/**`])
     .pipe(gulp.dest(`${dest}api/`))
@@ -125,7 +119,6 @@ gulp.task('api', () => {
  gulp.task('basics', ['html', 'api']);
 
 gulp.task('sass', ['sasslint'], () => {
-  // return gulp.src('src/sass/main.sass')
   return gulp.src(styles.in)
     .pipe(sourcemaps.init())
     .pipe(plumber())
@@ -162,7 +155,9 @@ var bundler = browserify(js.in + js.filename, watchify.args);
 
 // Babel transform
 bundler.transform(babelify.configure({
-    sourceMapRelative: 'src'
+    //sourceMaps: false
+    //sourceMapsRelative: 'src'
+    //sourceMapsAbsolute: true
 }));
 
 // On updates recompile
@@ -178,7 +173,9 @@ function bundle() {
     .pipe(exorcist('public/assets/js/bundle.js.map'))
     .pipe(source('bundle.js'))
     .pipe(buffer())
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(ifElse(process.env.NODE_ENV === 'production', uglify))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(js.out));
 }
 
@@ -253,13 +250,11 @@ gulp.task('image', () => {
 gulp.task('image-svg', () => {
   return gulp.src([`${images.in}/**/*.svg`])
     .pipe(gulp.dest(`${images.out}images`))
-
 });
 
 gulp.task('image-icon', () => {
   return gulp.src([`${images.in}/**/*.png`])
     .pipe(gulp.dest(`${images.out}images`))
-
 });
 
 //TODO Refactor with image task, error is thrown for icons .png...

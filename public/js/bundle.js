@@ -34979,10 +34979,7 @@ var CurrentDay = function (_React$Component) {
   function CurrentDay() {
     _classCallCheck(this, CurrentDay);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CurrentDay).call(this));
-
-    _this.state = {};
-    return _this;
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(CurrentDay).apply(this, arguments));
   }
 
   _createClass(CurrentDay, [{
@@ -34994,11 +34991,25 @@ var CurrentDay = function (_React$Component) {
         _react2.default.createElement(
           'p',
           null,
+          'date: ',
+          this.props.date.toString()
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'day: ',
+          this.props.date.getDay()
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'temp: ',
           this.props.temp
         ),
         _react2.default.createElement(
           'p',
           null,
+          'description: ',
           this.props.description
         )
       );
@@ -35092,6 +35103,10 @@ var _CurrentDay = require('./CurrentDay');
 
 var _CurrentDay2 = _interopRequireDefault(_CurrentDay);
 
+var _WeekDay = require('../utils/WeekDay');
+
+var _WeekDay2 = _interopRequireDefault(_WeekDay);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35109,6 +35124,7 @@ var WeatherHeader = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(WeatherHeader).call(this));
 
     _this.state = {
+      weekDay: "string",
       dataWeather: {
         city: {
           id: 12345,
@@ -35138,7 +35154,7 @@ var WeatherHeader = function (_React$Component) {
         }]
       }
     };
-    // this._fetchWeather = _fetchWeather.bind(this);
+
     return _this;
   }
 
@@ -35153,9 +35169,15 @@ var WeatherHeader = function (_React$Component) {
     value: function render() {
       var weatherList = this._getWeatherList();
       var weatherCurrent = this._getCurrentWeather();
+      console.log(this.props);
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(
+          'p',
+          null,
+          (0, _WeekDay2.default)()
+        ),
         _react2.default.createElement(
           'div',
           null,
@@ -35168,6 +35190,7 @@ var WeatherHeader = function (_React$Component) {
         )
       );
     }
+
     //TODO Add the right props to be passed down WeatherList
 
   }, {
@@ -35175,8 +35198,9 @@ var WeatherHeader = function (_React$Component) {
     value: function _getWeatherList() {
       return this.state.dataWeather.list.map(function (weather) {
         return _react2.default.createElement(_WeatherList2.default, {
-          key: weather.dt,
-          dt_txt: weather.dt_txt
+          temp: weather.temp.day,
+          description: weather.weather[0].description,
+          key: weather.dt
         });
       });
     }
@@ -35186,9 +35210,11 @@ var WeatherHeader = function (_React$Component) {
   }, {
     key: '_getCurrentWeather',
     value: function _getCurrentWeather() {
+      var current = this.state.dataWeather.list[0];
       return _react2.default.createElement(_CurrentDay2.default, {
-        temp: this.state.dataWeather.list[0].temp.day,
-        description: this.state.dataWeather.list[0].weather[0].description
+        date: new Date(current.dt * 1000),
+        temp: current.temp.day,
+        description: current.weather[0].description
       });
     }
   }, {
@@ -35196,9 +35222,13 @@ var WeatherHeader = function (_React$Component) {
     value: function _fetchWeather() {
       var _this2 = this;
 
+      var apiID = '672aa588c2a9ed1c903cd291e545dcac';
+      var forecastUrl = 'http://api.openweathermap.org/data/2.5/forecast/daily';
+      var location = 'London';
+      //TODO Create object to store the query to be passed
       _jquery2.default.ajax({
         method: 'GET',
-        url: 'http://api.openweathermap.org/data/2.5/forecast/daily?id=524901&APPID=672aa588c2a9ed1c903cd291e545dcac',
+        url: forecastUrl + '?q=' + location + '&APPID=' + apiID,
         //context: '',
         success: function success(dataWeather) {
           _this2.setState({ dataWeather: dataWeather });
@@ -35213,17 +35243,9 @@ var WeatherHeader = function (_React$Component) {
   return WeatherHeader;
 }(_react2.default.Component);
 
-// http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=672aa588c2a9ed1c903cd291e545dcac
-// http://api.openweathermap.org/data/2.5/forcast?qLondon&APPID=672aa588c2a9ed1c903cd291e545dcac
-
-// &APPID=
-// const apiKey = "672aa588c2a9ed1c903cd291e545dcac"
-// q=London
-
-
 exports.default = WeatherHeader;
 
-},{"./CurrentDay":231,"./WeatherList":234,"jquery":48,"react":227}],234:[function(require,module,exports){
+},{"../utils/WeekDay":237,"./CurrentDay":231,"./WeatherList":234,"jquery":48,"react":227}],234:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35250,16 +35272,12 @@ var WeatherList = function (_React$Component) {
   function WeatherList() {
     _classCallCheck(this, WeatherList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(WeatherList).call(this));
-
-    _this.state = {};
-    return _this;
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(WeatherList).apply(this, arguments));
   }
 
   _createClass(WeatherList, [{
     key: "render",
     value: function render() {
-
       return _react2.default.createElement(
         "div",
         { className: "item" },
@@ -35269,18 +35287,9 @@ var WeatherList = function (_React$Component) {
           _react2.default.createElement(
             "li",
             null,
-            "Day:"
-          ),
-          _react2.default.createElement(
-            "li",
-            null,
-            "Tem: ",
-            this.props.temp
-          ),
-          _react2.default.createElement(
-            "li",
-            null,
-            "main: ",
+            "Temp: ",
+            this.props.temp,
+            "Description: ",
             this.props.description
           )
         )
@@ -35447,5 +35456,34 @@ component CommentBox using this.props.apiUrl - _fetchComments() method
 
 exports.default = WeatherPage;
 
-},{"../components/WeatherBox":232,"react":227}]},{},[230])
+},{"../components/WeatherBox":232,"react":227}],237:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+/**
+ * Created by jonlazarini on 22/06/16.
+ */
+
+var toWeekDay = function toWeekDay() {
+  var d = new Date();
+  var weekday = new Array(7);
+  weekday[0] = "Sunday";
+  weekday[1] = "Monday";
+  weekday[2] = "Tuesday";
+  weekday[3] = "Wednesday";
+  weekday[4] = "Thursday";
+  weekday[5] = "Friday";
+  weekday[6] = "Saturday";
+
+  var n = weekday[d.getDay()];
+  return n;
+};
+
+exports.default = { toWeekDay: toWeekDay };
+
+},{}]},{},[230])
+//# sourceMappingURL=bundle.js.map
+
 //# sourceMappingURL=bundle.js.map
