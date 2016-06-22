@@ -2,9 +2,9 @@
  * Created by jonlazarini on 12/06/16.
  */
 import React from 'react';
-import WeatherData from '../WeatherData';
+import WeatherHeader from './WeatherHeader';
 
-export default class Box extends React.Component {
+export default class WeatherBox extends React.Component {
 
     constructor() {
         super();
@@ -16,10 +16,8 @@ export default class Box extends React.Component {
         return (
           <div>
             Comment box here and weatherdata below:
-
-            <WeatherData/>
+            <WeatherHeader/>
           </div>
-
         );
     }
 }

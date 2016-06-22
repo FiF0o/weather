@@ -12,7 +12,7 @@ export default class Layout extends React.Component {
         <div className="top-menu">
           <ul>
             <li>
-              <Link to="/blog">Blog</Link>
+              <Link to="/currentweather">Current weather</Link>
             </li>
           </ul>
         </div>

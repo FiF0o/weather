@@ -16,7 +16,7 @@ import ReactDOM from 'react-dom';
 
 import {hashHistory, Router, Route, Redirect} from 'react-router'
 import Layout from './layout/Layout'
-import BlogPage from './pages/BlogPage'
+import WeatherPage from './pages/WeatherPage'
 //on this Route, / component Layout is being rendered
 
 /*
@@ -25,10 +25,10 @@ this.props.children on the parent class
 */
 const app = (
   <Router history={hashHistory}>
-    <Redirect from="/" to="/blog" />
+    <Redirect from="/" to="/currentweather" />
 
     <Route path="/" component={Layout}>
-      <Route path="blog" component={BlogPage}/>
+      <Route path="currentweather" component={WeatherPage}/>
     </Route>
 
   </Router>

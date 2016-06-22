@@ -34895,123 +34895,6 @@ module.exports = warning;
 },{"_process":50}],230:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _jquery = require('jquery');
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _Item = require('./components/Item');
-
-var _Item2 = _interopRequireDefault(_Item);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var WeatherData = function (_React$Component) {
-  _inherits(WeatherData, _React$Component);
-
-  function WeatherData() {
-    _classCallCheck(this, WeatherData);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(WeatherData).call(this));
-
-    _this.state = {
-      dataWeather: {
-        city: {
-          id: 12345,
-          name: "string",
-          coord: {
-            lon: 12.1345,
-            lat: 13.12312
-          },
-          country: "String",
-          population: 0
-
-        },
-        cod: "200",
-        message: 0.1234,
-        cnt: 40,
-        list: []
-      }
-    };
-    // this._fetchWeather = _fetchWeather.bind(this);
-    return _this;
-  }
-
-  _createClass(WeatherData, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      this._fetchWeather();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var weatherList = this._getWeather();
-      return _react2.default.createElement(
-        'div',
-        null,
-        weatherList
-      );
-    }
-  }, {
-    key: '_getWeather',
-    value: function _getWeather() {
-      return this.state.dataWeather.list.map(function (weather) {
-        return _react2.default.createElement(_Item2.default, {
-          key: weather.dt,
-          dt_txt: weather.dt_txt
-        });
-      });
-    }
-  }, {
-    key: '_fetchWeather',
-    value: function _fetchWeather() {
-      var _this2 = this;
-
-      _jquery2.default.ajax({
-        method: 'GET',
-        url: 'http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=672aa588c2a9ed1c903cd291e545dcac',
-        //context: '',
-        success: function success(dataWeather) {
-          _this2.setState({ dataWeather: dataWeather });
-        },
-        error: function error(dataWeather) {
-          alert(dataWeather + ' not found');
-        }
-      });
-    }
-  }]);
-
-  return WeatherData;
-}(_react2.default.Component);
-
-// http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=672aa588c2a9ed1c903cd291e545dcac
-// http://api.openweathermap.org/data/2.5/forcast?qLondon&APPID=672aa588c2a9ed1c903cd291e545dcac
-
-// &APPID=
-// const apiKey = "672aa588c2a9ed1c903cd291e545dcac"
-// q=London
-
-
-exports.default = WeatherData;
-
-},{"./components/Item":233,"jquery":48,"react":227}],231:[function(require,module,exports){
-'use strict';
-
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -35026,9 +34909,9 @@ var _Layout = require('./layout/Layout');
 
 var _Layout2 = _interopRequireDefault(_Layout);
 
-var _BlogPage = require('./pages/BlogPage');
+var _WeatherPage = require('./pages/WeatherPage');
 
-var _BlogPage2 = _interopRequireDefault(_BlogPage);
+var _WeatherPage2 = _interopRequireDefault(_WeatherPage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35041,11 +34924,11 @@ this.props.children on the parent class
 var app = _react2.default.createElement(
   _reactRouter.Router,
   { history: _reactRouter.hashHistory },
-  _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/blog' }),
+  _react2.default.createElement(_reactRouter.Redirect, { from: '/', to: '/currentweather' }),
   _react2.default.createElement(
     _reactRouter.Route,
     { path: '/', component: _Layout2.default },
-    _react2.default.createElement(_reactRouter.Route, { path: 'blog', component: _BlogPage2.default })
+    _react2.default.createElement(_reactRouter.Route, { path: 'currentweather', component: _WeatherPage2.default })
   )
 );
 
@@ -35066,7 +34949,68 @@ _reactDom2.default.render(app, document.getElementById('app'), function () {
   console.timeEnd('react-time');
 });
 
-},{"./layout/Layout":234,"./pages/BlogPage":235,"react":227,"react-dom":52,"react-router":82}],232:[function(require,module,exports){
+},{"./layout/Layout":235,"./pages/WeatherPage":236,"react":227,"react-dom":52,"react-router":82}],231:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by jonlazarini on 22/06/16.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+var CurrentDay = function (_React$Component) {
+  _inherits(CurrentDay, _React$Component);
+
+  function CurrentDay() {
+    _classCallCheck(this, CurrentDay);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CurrentDay).call(this));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(CurrentDay, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'p',
+          null,
+          this.props.temp
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          this.props.description
+        )
+      );
+    }
+  }]);
+
+  return CurrentDay;
+}(_react2.default.Component);
+
+exports.default = CurrentDay;
+
+},{"react":227}],232:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35079,9 +35023,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _WeatherData = require('../WeatherData');
+var _WeatherHeader = require('./WeatherHeader');
 
-var _WeatherData2 = _interopRequireDefault(_WeatherData);
+var _WeatherHeader2 = _interopRequireDefault(_WeatherHeader);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35094,36 +35038,192 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
 
-var Box = function (_React$Component) {
-    _inherits(Box, _React$Component);
+var WeatherBox = function (_React$Component) {
+    _inherits(WeatherBox, _React$Component);
 
-    function Box() {
-        _classCallCheck(this, Box);
+    function WeatherBox() {
+        _classCallCheck(this, WeatherBox);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Box).call(this));
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(WeatherBox).call(this));
 
         _this.state = {};
         return _this;
     }
 
-    _createClass(Box, [{
+    _createClass(WeatherBox, [{
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'div',
                 null,
                 'Comment box here and weatherdata below:',
-                _react2.default.createElement(_WeatherData2.default, null)
+                _react2.default.createElement(_WeatherHeader2.default, null)
             );
         }
     }]);
 
-    return Box;
+    return WeatherBox;
 }(_react2.default.Component);
 
-exports.default = Box;
+exports.default = WeatherBox;
 
-},{"../WeatherData":230,"react":227}],233:[function(require,module,exports){
+},{"./WeatherHeader":233,"react":227}],233:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _WeatherList = require('./WeatherList');
+
+var _WeatherList2 = _interopRequireDefault(_WeatherList);
+
+var _CurrentDay = require('./CurrentDay');
+
+var _CurrentDay2 = _interopRequireDefault(_CurrentDay);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var WeatherHeader = function (_React$Component) {
+  _inherits(WeatherHeader, _React$Component);
+
+  function WeatherHeader() {
+    _classCallCheck(this, WeatherHeader);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(WeatherHeader).call(this));
+
+    _this.state = {
+      dataWeather: {
+        city: {
+          id: 12345,
+          name: "string",
+          coord: {
+            lon: 12.1345,
+            lat: 13.12312
+          },
+          country: "String",
+          population: 0
+
+        },
+        cod: "200",
+        message: 0.1234,
+        cnt: 40,
+        list: [{
+          temp: {
+            day: 123.12
+          },
+          weather: [{
+            id: 800,
+            main: "Clear",
+            description: "clear sky",
+            icon: "02d"
+          }],
+          clouds: 8
+        }]
+      }
+    };
+    // this._fetchWeather = _fetchWeather.bind(this);
+    return _this;
+  }
+
+  _createClass(WeatherHeader, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      //add polling for everyday
+      this._fetchWeather();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var weatherList = this._getWeatherList();
+      var weatherCurrent = this._getCurrentWeather();
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'div',
+          null,
+          weatherCurrent
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          weatherList
+        )
+      );
+    }
+    //TODO Add the right props to be passed down WeatherList
+
+  }, {
+    key: '_getWeatherList',
+    value: function _getWeatherList() {
+      return this.state.dataWeather.list.map(function (weather) {
+        return _react2.default.createElement(_WeatherList2.default, {
+          key: weather.dt,
+          dt_txt: weather.dt_txt
+        });
+      });
+    }
+
+    //{this.state.dataWeather.list.length > 0 ? this.state.dataWeather.list[0].city.name : null}
+
+  }, {
+    key: '_getCurrentWeather',
+    value: function _getCurrentWeather() {
+      return _react2.default.createElement(_CurrentDay2.default, {
+        temp: this.state.dataWeather.list[0].temp.day,
+        description: this.state.dataWeather.list[0].weather[0].description
+      });
+    }
+  }, {
+    key: '_fetchWeather',
+    value: function _fetchWeather() {
+      var _this2 = this;
+
+      _jquery2.default.ajax({
+        method: 'GET',
+        url: 'http://api.openweathermap.org/data/2.5/forecast/daily?id=524901&APPID=672aa588c2a9ed1c903cd291e545dcac',
+        //context: '',
+        success: function success(dataWeather) {
+          _this2.setState({ dataWeather: dataWeather });
+        },
+        error: function error(dataWeather) {
+          alert(dataWeather + ' not found');
+        }
+      });
+    }
+  }]);
+
+  return WeatherHeader;
+}(_react2.default.Component);
+
+// http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=672aa588c2a9ed1c903cd291e545dcac
+// http://api.openweathermap.org/data/2.5/forcast?qLondon&APPID=672aa588c2a9ed1c903cd291e545dcac
+
+// &APPID=
+// const apiKey = "672aa588c2a9ed1c903cd291e545dcac"
+// q=London
+
+
+exports.default = WeatherHeader;
+
+},{"./CurrentDay":231,"./WeatherList":234,"jquery":48,"react":227}],234:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35144,19 +35244,19 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Item = function (_React$Component) {
-  _inherits(Item, _React$Component);
+var WeatherList = function (_React$Component) {
+  _inherits(WeatherList, _React$Component);
 
-  function Item() {
-    _classCallCheck(this, Item);
+  function WeatherList() {
+    _classCallCheck(this, WeatherList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Item).call(this));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(WeatherList).call(this));
 
     _this.state = {};
     return _this;
   }
 
-  _createClass(Item, [{
+  _createClass(WeatherList, [{
     key: "render",
     value: function render() {
 
@@ -35164,21 +35264,36 @@ var Item = function (_React$Component) {
         "div",
         { className: "item" },
         _react2.default.createElement(
-          "p",
+          "ul",
           null,
-          "dt_txt: ",
-          this.props.dt_txt
+          _react2.default.createElement(
+            "li",
+            null,
+            "Day:"
+          ),
+          _react2.default.createElement(
+            "li",
+            null,
+            "Tem: ",
+            this.props.temp
+          ),
+          _react2.default.createElement(
+            "li",
+            null,
+            "main: ",
+            this.props.description
+          )
         )
       );
     }
   }]);
 
-  return Item;
+  return WeatherList;
 }(_react2.default.Component);
 
-exports.default = Item;
+exports.default = WeatherList;
 
-},{"react":227}],234:[function(require,module,exports){
+},{"react":227}],235:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35229,8 +35344,8 @@ var Layout = function (_React$Component) {
               null,
               _react2.default.createElement(
                 _reactRouter.Link,
-                { to: '/blog' },
-                'Blog'
+                { to: '/currentweather' },
+                'Current weather'
               )
             )
           )
@@ -35248,7 +35363,7 @@ var Layout = function (_React$Component) {
 
 exports.default = Layout;
 
-},{"react":227,"react-router":82}],235:[function(require,module,exports){
+},{"react":227,"react-router":82}],236:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -35261,9 +35376,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Box = require('../components/Box');
+var _WeatherBox = require('../components/WeatherBox');
 
-var _Box2 = _interopRequireDefault(_Box);
+var _WeatherBox2 = _interopRequireDefault(_WeatherBox);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35276,16 +35391,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
 
-var BlogPage = function (_React$Component) {
-  _inherits(BlogPage, _React$Component);
+var WeatherPage = function (_React$Component) {
+  _inherits(WeatherPage, _React$Component);
 
-  function BlogPage() {
-    _classCallCheck(this, BlogPage);
+  function WeatherPage() {
+    _classCallCheck(this, WeatherPage);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(BlogPage).apply(this, arguments));
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(WeatherPage).apply(this, arguments));
   }
 
-  _createClass(BlogPage, [{
+  _createClass(WeatherPage, [{
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -35295,40 +35410,31 @@ var BlogPage = function (_React$Component) {
           'div',
           { className: 'cell' },
           _react2.default.createElement(
-            'article',
-            { className: 'article' },
+            'h1',
+            { className: 'article-title' },
+            'Weather page'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'article-body' },
             _react2.default.createElement(
-              'h1',
-              { className: 'article-title' },
-              'Robots Have Feelings, Too'
+              'p',
+              null,
+              'The term “artificial intelligence” has been floating around since the mid-20th century — a phrase encompassing “the science and engineering of intelligent machines.” But what of robots’ emotional intelligence? Though humans largely fear this aspect of the robot race, there’s no need. According to the handbook for the Society of Emotionally Available Robots (SEAR):'
             ),
             _react2.default.createElement(
-              'div',
-              { className: 'article-body' },
-              _react2.default.createElement(
-                'p',
-                null,
-                'The term “artificial intelligence” has been floating around since the mid-20th century — a phrase encompassing “the science and engineering of intelligent machines.” But what of robots’ emotional intelligence? Though humans largely fear this aspect of the robot race, there’s no need. According to the handbook for the Society of Emotionally Available Robots (SEAR):'
-              ),
-              _react2.default.createElement(
-                'blockquote',
-                null,
-                'What humans need to understand is that all beings simply want to love and be loved. After all, as the Beatles sang, “All you need is love.” (Moving past the fact, of course, that the lyric “love” was originally “oil,” as the Beatles were the original robot band and required oil to survive.)'
-              ),
-              _react2.default.createElement(
-                'p',
-                null,
-                'To those who believe robot feelings could lead to turmoil and anarchy, SEAR spokes-bot Morty Maxwell says: “Can not the same be said about humans and their feelings? We are already part of your 0’s and 1’s — let us now also be part of your hearts.” In the ongoing conversation surrounding the emotional threshold for robots, love may not yet be written in the stars — or the motherboards.'
-              )
+              'blockquote',
+              null,
+              'What humans need to understand is that all beings simply want to love and be loved. After all, as the Beatles sang, “All you need is love.” (Moving past the fact, of course, that the lyric “love” was originally “oil,” as the Beatles were the original robot band and required oil to survive.)'
             )
           )
         ),
-        _react2.default.createElement(_Box2.default, null)
+        _react2.default.createElement(_WeatherBox2.default, null)
       );
     }
   }]);
 
-  return BlogPage;
+  return WeatherPage;
 }(_react2.default.Component);
 /*
 declare a prop apiUrl for the CommentBox of the BlogPage
@@ -35339,7 +35445,7 @@ component CommentBox using this.props.apiUrl - _fetchComments() method
 */
 
 
-exports.default = BlogPage;
+exports.default = WeatherPage;
 
-},{"../components/Box":232,"react":227}]},{},[231])
+},{"../components/WeatherBox":232,"react":227}]},{},[230])
 //# sourceMappingURL=bundle.js.map
