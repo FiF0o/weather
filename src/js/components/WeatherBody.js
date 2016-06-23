@@ -2,7 +2,8 @@ import React from 'react';
 import jQuery from 'jquery';
 import WeatherList from './WeatherList';
 import CurrentDay from './CurrentDay';
-//import toWeekDay from '../utils/WeekDay';
+import WeatherHeader from './WeatherHeader';
+import toWeekDay from '../utils/WeekDay';
 
 
 export default class WeatherBody extends React.Component  {
@@ -11,7 +12,6 @@ export default class WeatherBody extends React.Component  {
     super();
 
     this.state = {
-      weekDay: "string",
       dataWeather: {
         city: {
           id: 12345,
@@ -41,40 +41,53 @@ export default class WeatherBody extends React.Component  {
         }]
       }
     };
-
   }
 
   componentWillMount() {
-    //add polling for everyday
+    //TODO add polling for refreshing data every day - timer
     this._fetchWeather();
   }
 
   render() {
     const weatherList = this._getWeatherList();
     const weatherCurrent = this._getCurrentWeather();
+
+    const current = this.state.dataWeather.list[0];
+    
     return(
       <div>
-        <div>{weatherCurrent}</div>
-        <div>{weatherList}</div>
+        <WeatherHeader
+          today={new Date(current.dt)}
+          name={this.state.dataWeather.city.name}
+          location={this.state.dataWeather.city.country}
+        />
+        <div>
+          <div>{weatherCurrent}</div>
+          <div>{weatherList}</div>
+        </div>
       </div>
     );
   }
 
-
-//TODO Add the right props to be passed down WeatherList
-  
   _getWeatherList() {
     return this.state.dataWeather.list.map((weather) => {
+      const timestampInMilliseconds = weather.dt * 1000;
+      const dayMonthNumb = new Date(timestampInMilliseconds);
+      const weekDayEng = toWeekDay(dayMonthNumb);
+      
+      const nowTemp = weather.temp.day;
+      
       return (
         <WeatherList
-          temp={weather.temp.day}
+          day={weekDayEng}
+          temp={nowTemp}
           description={weather.weather[0].description}
           key={weather.dt}
-        />)
+        />
+      )
     });
   }
 
-  //{this.state.dataWeather.list.length > 0 ? this.state.dataWeather.list[0].city.name : null}
   _getCurrentWeather() {
     const current = this.state.dataWeather.list[0];
     return (
@@ -85,9 +98,14 @@ export default class WeatherBody extends React.Component  {
       />
     );
   }
-
   
   _fetchWeather() {
+    /**
+     * Request for London city for the next 7 days
+     *
+     *  http://api.openweathermap.org/data/2.5/forecast/daily?q=London&APPID=672aa588c2a9ed1c903cd291e545dcac
+     *  
+     **/
     const apiID = '672aa588c2a9ed1c903cd291e545dcac';
     const forecastUrl = 'http://api.openweathermap.org/data/2.5/forecast/daily';
     const location = 'London';
@@ -100,8 +118,9 @@ export default class WeatherBody extends React.Component  {
         this.setState({dataWeather})
       },
       error: (dataWeather) => {
-        alert(`${dataWeather} not found`);
+        alert(`${dataWeather} not found! Go and get a decent network provider! :(`);
       }
-    })
+    });
   }
 }
+

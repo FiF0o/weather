@@ -7,10 +7,8 @@ export default class CurrentDay extends React.Component  {
   render() {
     return (
       <div>
-        <p>date: {this.props.date.toString()}</p>
-        <p>day: {this.props.date.getDay()}</p>
-        <p>temp: {this.props.temp}</p>
-        <p>description: {this.props.description}</p>
+        <p>{ this.props.temp }</p>
+        <p>{ this.props.description }</p>        
       </div>
     );
   }

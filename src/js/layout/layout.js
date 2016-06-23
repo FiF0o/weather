@@ -1,7 +1,6 @@
 /**
  * Created by jonlazarini on 13/06/16.
  */
-
 import React from 'react'
 import { Link } from 'react-router'
 

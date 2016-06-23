@@ -1,11 +1,8 @@
 /**
  * Created by jonlazarini on 22/06/16.
  */
-
-
-const toWeekDay = () => {
-    var d = new Date();
-    var weekday = new Array(7);
+const toWeekDay = (date) => {
+    const weekday = new Array(7);
     weekday[0]=  "Sunday";
     weekday[1] = "Monday";
     weekday[2] = "Tuesday";
@@ -14,8 +11,9 @@ const toWeekDay = () => {
     weekday[5] = "Friday";
     weekday[6] = "Saturday";
 
-    var n = weekday[d.getDay()];
-    return n
+    const dayStringEng = weekday[date.getDay()];
+    return dayStringEng
   };
 
-export default { toWeekDay };
+export default toWeekDay;
+

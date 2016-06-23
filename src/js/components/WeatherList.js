@@ -6,8 +6,13 @@ export default class WeatherList extends React.Component {
       <div className="item">
         <ul>
           <li>
-            Temp: {this.props.temp}
-            Description: {this.props.description}
+            {this.props.day}
+          </li>
+          <li>
+            {this.props.temp}
+          </li>
+          <li>
+            {this.props.description}
           </li>
         </ul>
       </div>

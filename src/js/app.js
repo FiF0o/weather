@@ -32,7 +32,7 @@ const app = (
     </Route>
 
   </Router>
-)
+);
 
 
 ReactDOM.render(
