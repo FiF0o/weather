@@ -2,10 +2,10 @@ import React from 'react';
 import jQuery from 'jquery';
 import WeatherList from './WeatherList';
 import CurrentDay from './CurrentDay';
-import toWeekDay from '../utils/WeekDay';
+//import toWeekDay from '../utils/WeekDay';
 
 
-export default class WeatherHeader extends React.Component  {
+export default class WeatherBody extends React.Component  {
 
   constructor() {
     super();
@@ -44,7 +44,6 @@ export default class WeatherHeader extends React.Component  {
 
   }
 
-
   componentWillMount() {
     //add polling for everyday
     this._fetchWeather();
@@ -53,10 +52,8 @@ export default class WeatherHeader extends React.Component  {
   render() {
     const weatherList = this._getWeatherList();
     const weatherCurrent = this._getCurrentWeather();
-    console.log(this.props);
     return(
       <div>
-        <p>{toWeekDay()}</p>
         <div>{weatherCurrent}</div>
         <div>{weatherList}</div>
       </div>

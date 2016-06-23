@@ -9,12 +9,10 @@ import browserify from 'browserify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import eslint from 'gulp-eslint';
-import exorcist from 'exorcist';
 import browserSync from 'browser-sync';
 import watchify from 'watchify';
 import babelify from 'babelify';
 import uglify from 'gulp-uglify';
-import ifElse from 'gulp-if-else';
 import sass from 'gulp-sass';
 import sourcemaps from 'gulp-sourcemaps';
 import plumber from 'gulp-plumber';
@@ -85,7 +83,9 @@ import * as pkg  from './package.json';
 log(`${pkg.name} ${pkg.version} ${config.environment} build`);
 
 gulp.task('debug', [], () => {
-  //log(bootstrapSass);
+  log(js.in)
+  log(js.out)
+  log(js.filename)
 });
 
 const sync = browserSync.create();
@@ -151,12 +151,12 @@ gulp.task('sasslint', () => {
 
 // Input file.
 watchify.args.debug = true;
-var bundler = browserify(js.in + js.filename, watchify.args);
+const bundler = browserify(js.in + js.filename, watchify.args);
 
 // Babel transform
 bundler.transform(babelify.configure({
-    //sourceMaps: false
-    //sourceMapsRelative: 'src'
+    // sourceMaps: true,
+    // sourceMapRelative: 'src'
     //sourceMapsAbsolute: true
 }));
 
@@ -169,13 +169,11 @@ function bundle() {
       console.error( '\nError: ', error.message, '\n');
       this.emit('end');
     })
-    //TODO Refactor ith config param
-    .pipe(exorcist('public/assets/js/bundle.js.map'))
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true }))
-    .pipe(ifElse(process.env.NODE_ENV === 'production', uglify))
-    .pipe(sourcemaps.write('./'))
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(js.out));
 }
 
@@ -183,7 +181,7 @@ function bundle() {
 gulp.task('default', ['transpile', 'basics', 'sass']);
 
 // add sass task that sass() but sasslint before
-gulp.task('transpile', ['lint'], () => bundle());
+gulp.task('transpile', () => bundle());
 
 gulp.task('lint', () => {
     return gulp.src([`${src}/**/*.js`, 'gulpfile.babel.js'])
@@ -199,7 +197,7 @@ gulp.task('serve', ['basics', 'sass', 'transpile', 'image:all'], () => sync.init
   }
 }));
 
-gulp.task('js-watch', ['transpile'], () => sync.reload());
+gulp.task('js-watch', ['transpile', 'lint'], () => sync.reload());
 gulp.task('sass-watch', ['sass'], () => sync.reload());
 
 gulp.task('watch', ['serve'], () => {
