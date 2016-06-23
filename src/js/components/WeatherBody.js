@@ -4,7 +4,7 @@ import WeatherList from './WeatherList';
 import CurrentDay from './CurrentDay';
 import WeatherHeader from './WeatherHeader';
 import toWeekDay from '../utils/WeekDay';
-
+import convertToD from '../utils/ConvertTemp';
 
 export default class WeatherBody extends React.Component  {
 
@@ -76,11 +76,12 @@ export default class WeatherBody extends React.Component  {
       const weekDayEng = toWeekDay(dayMonthNumb);
       
       const nowTemp = weather.temp.day;
+      const convertToC = convertToD(nowTemp);
       
       return (
         <WeatherList
           day={weekDayEng}
-          temp={nowTemp}
+          temp={convertToC}
           description={weather.weather[0].description}
           key={weather.dt}
         />
@@ -90,10 +91,14 @@ export default class WeatherBody extends React.Component  {
 
   _getCurrentWeather() {
     const current = this.state.dataWeather.list[0];
+    
+    const nowTemp = current.temp.day;
+    const convertToC = convertToD(nowTemp);
+    
     return (
       <CurrentDay
         date={new Date(current.dt * 1000)}
-        temp={current.temp.day}
+        temp={convertToC}
         description={current.weather[0].description}
       />
     );
