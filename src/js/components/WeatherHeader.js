@@ -7,10 +7,8 @@ export default class WeatherHeader extends React.Component {
   render() {
     return (
       <div>
-        {this.props.name}
-        <p>{ this.props.location }</p>
-        
-        <p>{ new Date().toString().substring(0, 16) } </p>
+        <h4><span>{this.props.name}</span>,<span>&nbsp;</span><span>{ this.props.location }</span></h4>
+        <h3>{ new Date().toString().substring(0, 16) } </h3>
       </div>
     );
   }

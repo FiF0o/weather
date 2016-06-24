@@ -7739,37 +7739,6 @@ button.close {
   }
 }
 
-img {
-  width: 100%;
-  height: auto;
-}
-
-.article--video-img {
-  width: 100%;
-}
-
-button.button-secondary {
-  height: 44px;
-  padding: 0 40px;
-  margin: 0 auto;
-  background-color: #6ba2aa;
-  border-radius: 10px;
-  border: 1px solid #fce87c;
-  color: #fce87c;
-  text-transform: uppercase;
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -ms-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-}
-
-button.button-secondary:hover {
-  color: #6ba2aa;
-  background: #fce87c;
-  border: 2px solid #fce87c;
-}
-
 @font-face {
   font-family: "icons";
   src: url("../assets/fonts/icons.eot");
@@ -7803,9 +7772,52 @@ button.button-secondary:hover {
   content: "";
 }
 
+* {
+  box-sizing: border-box;
+}
+
+.video-wrapper {
+  float: none;
+  clear: both;
+  width: 100%;
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 25px;
+  height: 0;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.article--video-img-cover {
+  display: block;
+  width: 100%;
+  min-width: 30%;
+  height: auto;
+  background-size: cover;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.article--video-img {
+  width: 100%;
+}
+
+video {
+  object-fit: contain;
+}
+
 .fullscreen-bg {
   position: fixed;
-  top: 0px;
+  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
@@ -7817,12 +7829,6 @@ button.button-secondary:hover {
   .fullscreen-bg {
     width: auto;
     height: 100%;
-  }
-}
-
-@media (max-width: 767px) {
-  .fullscreen-bg {
-    background: url("../assets/images/adaptive-paths-guide-to-experience-mapping.jpg") center center/cover no-repeat;
   }
 }
 
@@ -7838,15 +7844,79 @@ button.button-secondary:hover {
   .fullscreen-bg__video {
     width: 300%;
     left: -100%;
-    height: 300%;
+    height: 200%;
     top: -100%;
   }
 }
 
 @media (max-width: 767px) {
   .fullscreen-bg__video {
-    display: block;
+    display: none;
   }
+}
+
+@media (max-width: 690px) {
+  body {
+    display: block;
+    width: 100vh;
+    height: auto;
+    background: url("../assets/images/adaptive-paths-guide-to-experience-mapping-1320px.jpg") center center;
+  }
+}
+
+.is-invisible {
+  display: none;
+}
+
+.weather-block {
+  margin: 0 auto;
+  padding: 150px 10px;
+}
+
+.weather-list {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px 0;
+  font-size: 1.6em;
+}
+
+.weather-list > ul {
+  display: inherit;
+  width: 100%;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.weather-list > ul > li {
+  display: inline-block;
+  padding: 20px 25px;
+  list-style: none;
+  border-bottom: 1px solid white;
+}
+
+.weather-list > ul > li:first-child {
+  float: left;
+}
+
+.weather-list > ul > li:not(:first-child) {
+  float: right;
+}
+
+.weather-list > ul > li:nth-child(2n+2) {
+  color: red;
+  position: relative;
+}
+
+.weather-list > ul > li:nth-child(2n+2):before {
+  position: absolute;
+  top: 35%;
+  left: 10px;
+  padding-right: 5px;
+  margin-right: 10px;
+  content: "";
+  height: 30%;
+  border-right: 1px solid orange;
 }
 
 /*# sourceMappingURL=main.css.map */

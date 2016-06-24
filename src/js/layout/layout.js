@@ -10,7 +10,7 @@ export default class Layout extends React.Component {
       <div>
         <div className="top-menu">
           <ul>
-            <li>
+            <li className="is-invisible">
               <Link to="/currentweather">Current weather</Link>
             </li>
           </ul>

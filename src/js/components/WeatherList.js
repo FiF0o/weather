@@ -3,8 +3,8 @@ import React from 'react';
 export default class WeatherList extends React.Component {
   render() {
     return (
-      <div className="item">
-        <ul>
+      <div className="weather-list">
+        <ul className="clearfix">
           <li>
             {this.props.day}
           </li>

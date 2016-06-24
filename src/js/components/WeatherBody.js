@@ -57,22 +57,27 @@ export default class WeatherBody extends React.Component  {
     return(
       <div className="row">
         
+        <div className="col-md-12">
+          <WeatherHeader
+            today={new Date(current.dt)}
+            name={this.state.dataWeather.city.name}
+            location={this.state.dataWeather.city.country}
+          />
+        </div>
+
+        <div className="col-md-12">
+          {weatherCurrent}
+        </div>
+        
+        <div className="col-md-12">
+          {weatherList}
+        </div>
+        
         <div className="fullscreen-bg">
           <video loop autoPlay muted poster="./assets/images/adaptive-paths-guide-to-experience-mapping-1320px.jpg" className="fullscreen-bg__video">
             <source src="./assets/videos/clouds.mp4" type="video/mp4" />
           </video>
         </div>
-        
-        <WeatherHeader
-          today={new Date(current.dt)}
-          name={this.state.dataWeather.city.name}
-          location={this.state.dataWeather.city.country}
-        />
-
-        {weatherCurrent}
-        {weatherList}
-        
- 
 
       </div>
       
