@@ -7,8 +7,7 @@ import WeatherBody from '../components/WeatherBody';
 export default class WeatherPage extends React.Component {
   render() {
     return (
-      <div>
-        <img src="./assets/images/adaptive-paths-guide-to-experience-mapping-1320px.jpg"/>
+      <div className="container">
         <WeatherBody />
       </div>
     )

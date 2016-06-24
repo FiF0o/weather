@@ -4,29 +4,29 @@
 @import '../vendors/bootstrap-sass/assets/stylesheets/bootstrap-sprockets'
 @import '../vendors/bootstrap-sass/assets/stylesheets/bootstrap'
 
-.container
-  background-color: red
-  color: blue
-  .row
-    background-color: blue
-    color: red
+//.container
+//  background-color: red
+//  color: blue
+//  .row
+//    background-color: blue
+//    color: red
 
 
-.video-wrapper
-  float: none
-  clear: both
-  width: 100%
-  position: relative
-  // 16:9
-  padding-bottom: 56.25%
-  padding-top: 25px
-  height: 0
-  iframe
-    position: absolute
-    top: 0
-    left: 0
-    width: 100% !important
-    height: 100% !important
+//.video-wrapper
+//  float: none
+//  clear: both
+//  width: 100%
+//  position: relative
+//  // 16:9
+//  padding-bottom: 56.25%
+//  padding-top: 25px
+//  height: 0
+//  iframe
+//    position: absolute
+//    top: 0
+//    left: 0
+//    width: 100% !important
+//    height: 100% !important
 
 
 //.article--video-img-cover
@@ -80,6 +80,8 @@ button
   @media (min-aspect-ratio: 16/9)
     width: auto
     height: 100%
+  @media (max-width: 767px)
+    background: url('../assets/images/adaptive-paths-guide-to-experience-mapping.jpg') center center / cover no-repeat;
 
 .fullscreen-bg__video
   position: absolute
@@ -88,5 +90,11 @@ button
   width: 100%
   height: 100%
   @media (min-aspect-ratio: 16/9)
-    width: auto
-    height: 100%
+    //width: auto
+    //height: 100%
+    width: 300%
+    left: -100%
+    height: 300%
+    top: -100%
+  @media (max-width: 767px)
+    display: block

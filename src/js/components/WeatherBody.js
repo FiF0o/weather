@@ -55,19 +55,30 @@ export default class WeatherBody extends React.Component  {
     const current = this.state.dataWeather.list[0];
     
     return(
-      <div>
+      <div className="row">
+        
+        <div className="fullscreen-bg">
+          <video loop autoPlay muted poster="./assets/images/adaptive-paths-guide-to-experience-mapping-1320px.jpg" className="fullscreen-bg__video">
+            <source src="./assets/videos/clouds.mp4" type="video/mp4" />
+          </video>
+        </div>
+        
         <WeatherHeader
           today={new Date(current.dt)}
           name={this.state.dataWeather.city.name}
           location={this.state.dataWeather.city.country}
         />
-        <div>
-          <div>{weatherCurrent}</div>
-          <div>{weatherList}</div>
-        </div>
+
+        {weatherCurrent}
+        {weatherList}
+        
+ 
+
       </div>
+      
     );
   }
+  //TODO Fix video... / is not at the end of the <source > tag
 
   _getWeatherList() {
     return this.state.dataWeather.list.map((weather) => {
@@ -128,4 +139,5 @@ export default class WeatherBody extends React.Component  {
     });
   }
 }
+//api.openweathermap.org/data/2.5/weather?q=London,uk&callback=test&APPID=672aa588c2a9ed1c903cd291e545dcac
 
