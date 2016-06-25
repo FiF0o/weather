@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d1ec7a30-8844-48a5-b14c-547fc2def7bb" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/source/sass/fonticon.scss" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/js/components/WeatherListTable.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/main.css" afterPath="$PROJECT_DIR$/public/css/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/main.css.map" afterPath="$PROJECT_DIR$/public/css/main.css.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/bundle.js" afterPath="$PROJECT_DIR$/public/js/bundle.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/bundle.js.map" afterPath="$PROJECT_DIR$/public/js/bundle.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/components/CurrentDay.js" afterPath="$PROJECT_DIR$/src/js/components/CurrentDay.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/components/WeatherBody.js" afterPath="$PROJECT_DIR$/src/js/components/WeatherBody.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/components/WeatherHeader.js" afterPath="$PROJECT_DIR$/src/js/components/WeatherHeader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/components/WeatherList.js" afterPath="$PROJECT_DIR$/src/js/components/WeatherList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/layout/layout.js" afterPath="$PROJECT_DIR$/src/js/layout/layout.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/pages/WeatherPage.js" afterPath="$PROJECT_DIR$/src/js/pages/WeatherPage.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sass/main.sass" afterPath="$PROJECT_DIR$/src/sass/main.sass" />
     </list>
     <ignored path="ReactPOC.iws" />
@@ -38,55 +32,26 @@
     <splitter split-orientation="horizontal" split-proportion="0.4120066">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="WeatherListTable.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/js/components/WeatherListTable.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="105">
+                  <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file leaf-file-name="WeatherBody.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/js/components/WeatherBody.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="360">
-                  <caret line="73" column="14" selection-start-line="73" selection-start-column="14" selection-end-line="73" selection-end-column="14" />
+                <state relative-caret-position="285">
+                  <caret line="86" column="8" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="8" />
                   <folding>
                     <element signature="e#0#26#0" expanded="true" />
-                    <element signature="e#381#945#0" expanded="false" />
+                    <element signature="e#99#149#0" expanded="true" />
+                    <element signature="e#434#998#0" expanded="false" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="WeatherHeader.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/js/components/WeatherHeader.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="105">
-                  <caret line="9" column="49" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="55" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="CurrentDay.js" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/js/components/CurrentDay.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="75">
-                  <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="WeatherPage.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/js/pages/WeatherPage.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="105">
-                  <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="WeatherList.js" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/js/components/WeatherList.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="165">
-                  <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
-                  <folding />
                 </state>
               </provider>
             </entry>
@@ -124,8 +89,8 @@
           <file leaf-file-name="main.sass" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/sass/main.sass">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="369">
-                  <caret line="139" column="18" selection-start-line="139" selection-start-column="18" selection-end-line="139" selection-end-column="18" />
+                <state relative-caret-position="233">
+                  <caret line="160" column="26" selection-start-line="160" selection-start-column="26" selection-end-line="160" selection-end-column="26" />
                   <folding />
                 </state>
               </provider>
@@ -151,7 +116,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/sass/1-tools/_test.sass" />
         <option value="$PROJECT_DIR$/test.js" />
         <option value="$PROJECT_DIR$/config.babel.js" />
         <option value="$PROJECT_DIR$/src/js/components/comment/comment-form.js" />
@@ -197,11 +161,12 @@
         <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/src/js/pages/WeatherPage.js" />
         <option value="$PROJECT_DIR$/src/js/layout/Layout.js" />
-        <option value="$PROJECT_DIR$/src/js/components/WeatherBody.js" />
         <option value="$PROJECT_DIR$/src/js/components/WeatherHeader.js" />
         <option value="$PROJECT_DIR$/src/js/components/WeatherList.js" />
-        <option value="$PROJECT_DIR$/src/sass/main.sass" />
         <option value="$PROJECT_DIR$/src/js/components/CurrentDay.js" />
+        <option value="$PROJECT_DIR$/src/js/components/WeatherBody.js" />
+        <option value="$PROJECT_DIR$/src/js/components/WeatherListTable.js" />
+        <option value="$PROJECT_DIR$/src/sass/main.sass" />
       </list>
     </option>
   </component>
@@ -495,11 +460,11 @@
       <recent name="$PROJECT_DIR$/public/assets/images/icons" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/js/components" />
       <recent name="$PROJECT_DIR$/public/assets" />
       <recent name="$PROJECT_DIR$/src/assets/videos" />
       <recent name="$PROJECT_DIR$/src/assets/images" />
       <recent name="$PROJECT_DIR$/src/assets/fonts" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager">
@@ -576,12 +541,12 @@
       <workItem from="1466365167026" duration="2867000" />
       <workItem from="1466368477819" duration="5937000" />
       <workItem from="1466452621985" duration="1226000" />
-      <workItem from="1466520494825" duration="49608000" />
+      <workItem from="1466520494825" duration="52530000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="105408000" />
+    <option name="totallyTimeSpent" value="108330000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-10" y="23" width="1440" height="873" extended-state="6" />
@@ -653,13 +618,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.eslintrc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="4" column="8" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/css/_legacy.css" />
     <entry file="file://$PROJECT_DIR$/public/css/main.css" />
     <entry file="file://$PROJECT_DIR$/src/js/components/main.js" />
@@ -888,29 +846,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/pages/WeatherPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/components/WeatherBody.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="73" column="14" selection-start-line="73" selection-start-column="14" selection-end-line="73" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#381#945#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/components/WeatherHeader.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="49" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/components/CurrentDay.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/pages/WeatherPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
           <folding />
         </state>
       </provider>
@@ -923,18 +878,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sass/main.sass">
+    <entry file="file://$PROJECT_DIR$/src/js/components/WeatherBody.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="139" column="18" selection-start-line="139" selection-start-column="18" selection-end-line="139" selection-end-column="18" />
+        <state relative-caret-position="285">
+          <caret line="86" column="8" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#99#149#0" expanded="true" />
+            <element signature="e#434#998#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/js/components/WeatherListTable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="40" selection-start-line="7" selection-start-column="40" selection-end-line="7" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/js/components/CurrentDay.js">
+    <entry file="file://$PROJECT_DIR$/src/sass/main.sass">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        <state relative-caret-position="233">
+          <caret line="160" column="26" selection-start-line="160" selection-start-column="26" selection-end-line="160" selection-end-column="26" />
           <folding />
         </state>
       </provider>

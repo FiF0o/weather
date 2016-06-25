@@ -1,6 +1,7 @@
 import React from 'react';
 import jQuery from 'jquery';
-import WeatherList from './WeatherList';
+//import WeatherList from './WeatherList';
+import WeatherListTable from './WeatherListTable';
 import CurrentDay from './CurrentDay';
 import WeatherHeader from './WeatherHeader';
 import toWeekDay from '../utils/WeekDay';
@@ -66,11 +67,22 @@ export default class WeatherBody extends React.Component  {
         </div>
 
         <div className="col-md-12">
-          {weatherCurrent}
+          { weatherCurrent }
         </div>
         
         <div className="col-md-12">
-          {weatherList}
+          <table className="table">
+            { /* <thead>
+            <tr>
+              <th>1</th>
+              <th>2</th>
+              <th>3</th>
+            </tr>
+            </thead> */ }
+            <tbody>
+              { weatherList }
+            </tbody>
+          </table>
         </div>
         
         <div className="fullscreen-bg">
@@ -95,7 +107,7 @@ export default class WeatherBody extends React.Component  {
       const convertToC = convertToD(nowTemp);
       
       return (
-        <WeatherList
+        <WeatherListTable
           day={weekDayEng}
           temp={convertToC}
           description={weather.weather[0].description}
