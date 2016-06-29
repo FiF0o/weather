@@ -57,19 +57,7 @@ export default class WeatherBody extends React.Component  {
     
     return(
       <div className="row">
-        
-        <div className="col-md-12">
-
-          <div className="input-group">
-            <span className="input-group-btn">
-              <button className="btn btn-default" type="button" onSubmit={ this._handleSubmit.bind(this) }>Go!</button>
-            </span>
-            <input type="text" className="form-control" ref={ (input) => this._city = input } placeholder="Search for..."/>
-          </div>
-
-        </div>
-        
-        
+                
         <div className="col-md-12">
           <WeatherHeader
             today={new Date(current.dt)}
@@ -107,11 +95,7 @@ export default class WeatherBody extends React.Component  {
     this.props.requestCity(city.value);
 
   }
-  _requestCity(city){
-    const newWeather = this.state.dataWeather.city.name[city];
-    // needs to replace existing object by a new object
-    this.setState({ dataWeather: newWeather })
-  }
+
   //TODO Fix video... / is not at the end of the <source > tag
 
   _getWeatherList() {
@@ -125,7 +109,6 @@ export default class WeatherBody extends React.Component  {
       
       return (
         <WeatherListTable
-          requestCity={ this._requestCity.bind(this) }
           day={weekDayEng}
           temp={convertToC}
           description={weather.weather[0].description}
