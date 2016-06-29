@@ -57,6 +57,17 @@ export default class WeatherBody extends React.Component  {
     
     return(
       <div className="row">
+
+        <div className="col-md-12">
+          
+          <div className="input-group">
+            <input type="text" className="form-control" placeholder="Search for..."/>
+            <span className="input-group-btn">
+              <button className="btn btn-default" type="button">Go!</button>
+            </span>
+          </div>
+
+        </div>
         
         <div className="col-md-12">
           <WeatherHeader
@@ -71,14 +82,8 @@ export default class WeatherBody extends React.Component  {
         </div>
         
         <div className="col-md-12">
+
           <table className="table">
-            { /* <thead>
-            <tr>
-              <th>1</th>
-              <th>2</th>
-              <th>3</th>
-            </tr>
-            </thead> */ }
             <tbody>
               { weatherList }
             </tbody>
