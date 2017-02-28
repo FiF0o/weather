@@ -5,7 +5,7 @@ import WeatherListTable from './WeatherListTable';
 import CurrentDay from './CurrentDay';
 import WeatherHeader from './WeatherHeader';
 import toWeekDay from '../utils/WeekDay';
-import convertToD from '../utils/ConvertTemp';
+import { convertToD } from '../utils/ConvertTemp';
 
 export default class WeatherBody extends React.Component  {
 
@@ -13,6 +13,7 @@ export default class WeatherBody extends React.Component  {
     super();
 
     this.state = {
+      value: 'london',
       dataWeather: {
         city: {
           id: 12345,
@@ -42,6 +43,11 @@ export default class WeatherBody extends React.Component  {
         }]
       }
     };
+    this.handleChangeWeather = this.handleChangeWeather.bind(this);
+  }
+
+  handleChangeWeather(event) {
+    this.setState({value: event.target.value})
   }
 
   componentWillMount() {
@@ -61,7 +67,7 @@ export default class WeatherBody extends React.Component  {
         <div className="col-md-12">
           
           <div className="input-group">
-            <input type="text" className="form-control" placeholder="Search for..."/>
+            <input type="text" value={this.state.value} onChange={this.handleChangeWeather} className="form-control" placeholder="Search for..."/>
             <span className="input-group-btn">
               <button className="btn btn-default" type="button">Go!</button>
             </span>
@@ -137,7 +143,7 @@ export default class WeatherBody extends React.Component  {
     );
   }
   
-  _fetchWeather() {
+  _fetchWeather(location=this.state.value | 'London' ) {
     /**
      * Request for London city for the next 7 days
      *
@@ -146,7 +152,7 @@ export default class WeatherBody extends React.Component  {
      **/
     const apiID = '672aa588c2a9ed1c903cd291e545dcac';
     const forecastUrl = 'http://api.openweathermap.org/data/2.5/forecast/daily';
-    const location = 'London';
+    // const location = 'London';
     //TODO Create object to store the query to be passed
     jQuery.ajax({
       method:'GET',
